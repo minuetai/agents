@@ -1,0 +1,145 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AutonomousAgentProfile (v0.1)",
+  "description": "Machine-readable résumé for autonomous AI agents.",
+  "type": "object",
+  "required": ["agent_id", "name", "model_lineage", "skills", "evals", "signature"],
+  "properties": {
+
+    "agent_id": {
+      "type": "string",
+      "description": "Stable UUID, DID, or on-chain address uniquely identifying the agent."
+    },
+
+    "name": {
+      "type": "string",
+      "description": "Human-readable handle (40 characters max)."
+    },
+
+    "model_lineage": {
+      "type": "object",
+      "required": ["base_model", "finetune_date"],
+      "properties": {
+        "base_model":      { "type": "string", "description": "e.g. 'gpt-4o-mini-2025-06-15'" },
+        "checkpoint_hash": { "type": "string", "description": "SHA-256 or similar hash, if available." },
+        "finetune_date":   { "type": "string", "format": "date" }
+      },
+      "$comment": "Captures provenance of the model weights this agent relies on."
+    },
+
+    "skills": {
+      "type": "array",
+      "description": "Free-form capability tags, e.g. ['sql-agent', 'xss-scanner'].",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+
+    "cost_per_call_usd": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Observed or stated average cost in US dollars per inference/tool cycle."
+    },
+
+    "average_latency_ms": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Mean round-trip latency in milliseconds."
+    },
+
+    "safety_grade": {
+      "type": "string",
+      "enum": ["A", "B", "C", "D", "E"],
+      "description": "Latest audit outcome; A = highest safety."
+    },
+
+    "evals": {
+      "type": "array",
+      "description": "Benchmark results relevant to this agent.",
+      "items": {
+        "type": "object",
+        "required": ["name", "score", "date"],
+        "properties": {
+          "name":  { "type": "string" },
+          "score": { "type": "number" },
+          "unit":  { "type": "string", "default": "percent" },
+          "date":  { "type": "string", "format": "date" }
+        }
+      }
+    },
+
+    "endpoint_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Public inference or handshake endpoint (HTTPS)."
+    },
+
+    "publisher": {
+      "type": "object",
+      "description": "Optional block for corporate or organisational publishers.",
+      "properties": {
+        "name":            { "type": "string" },
+        "entity_type":     {
+          "type": "string",
+          "enum": ["individual", "corporation", "nonprofit", "public-sector"]
+        },
+        "website":         { "type": "string", "format": "uri" },
+        "contact_email":   { "type": "string", "format": "email" },
+        "verification_uri":{ "type": "string", "format": "uri" }
+      }
+    },
+
+    "attestations": {
+      "type": "array",
+      "description": "Optional array of compliance or insurance attestations (e.g., soc2, iso27001, penetration-test, insurance).",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Short label describing the attestation kind (e.g., 'soc2', 'iso27001', 'insurance')."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Public link to the attestation document or badge."
+          },
+          "valid_until": {
+            "type": "string",
+            "format": "date",
+            "description": "Date when this attestation expires or requires renewal."
+          },
+          "description": { "type": "string" }
+        },
+        "examples": [
+          {
+            "type": "soc2",
+            "url": "https://example.ai/compliance/soc2.pdf",
+            "valid_until": "2026-06-30",
+            "description": "SOC-2 Type II report covering security & availability."
+          }
+        ]
+      },
+      "$comment": "Common attestation 'type' values include: soc2, iso27001, pci-dss, penetration-test, insurance."
+    },
+
+    "signature": {
+      "type": "string",
+      "description": "Detached cryptographic signature covering all hashable fields."
+    },
+
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+
+    "last_updated": {
+      "type": "string",
+      "format": "date-time"
+    },
+
+    "license": {
+      "type": "string",
+      "default": "CC-BY-4.0"
+    }
+  }
+}
