@@ -1,0 +1,23 @@
+{
+  "agent_id": "0xA1B2C3D4",
+  "name": "MapSummarizer",
+  "model_lineage": {
+    "base_model": "mistral/Mixtral-8x7B-Instruct",
+    "finetune_date": "2025-07-07"
+  },
+  "skills": ["map-rag", "route-summary"],
+  "cost_per_call_usd": 0.0018,
+  "average_latency_ms": 450,
+  "safety_grade": "B",
+  "evals": [
+    {
+      "name": "MapQA-20",
+      "score": 84.0,
+      "unit": "percent",
+      "date": "2025-07-06"
+    }
+  ],
+  "signature": "ed25519:PLACEHOLDER",
+  "last_updated": "2025-07-07T14:20:00Z",
+  "license": "CC-BY-4.0"
+}
