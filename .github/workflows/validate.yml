@@ -1,0 +1,33 @@
+name: schema-check
+
+on:
+  push:
+    paths:
+      - "agent_profile_v*.json"
+      - "examples/**.json"
+      - ".github/workflows/validate.yml"
+  pull_request:
+    paths:
+      - "agent_profile_v*.json"
+      - "examples/**.json"
+
+jobs:
+  ajv:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install AJV CLI
+        run: npm install -g ajv-cli ajv-formats
+
+      - name: Validate schema against Draft-07 meta-schema
+        run: |
+          ajv validate \
+            -s http://json-schema.org/draft-07/schema# \
+            -d agent_profile_v0.1.json
+
+      - name: Validate all example profiles
+        run: |
+          ajv validate \
+            -s agent_profile_v0.1.json \
+            -d "examples/*.json"
