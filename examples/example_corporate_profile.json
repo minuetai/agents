@@ -1,0 +1,39 @@
+{
+  "agent_id": "0xABCDEF123456",
+  "name": "EnterpriseWebNavigator",
+  "model_lineage": {
+    "base_model": "gpt-4o-mini-2025-06-15",
+    "finetune_date": "2025-07-06"
+  },
+  "skills": ["web-browse", "dom-interact"],
+  "cost_per_call_usd": 0.003,
+  "average_latency_ms": 650,
+  "safety_grade": "A",
+  "evals": [
+    {
+      "name": "WebArena-v1",
+      "score": 89.5,
+      "unit": "percent",
+      "date": "2025-07-05"
+    }
+  ],
+  "endpoint_url": "https://api.example.ai/navigator",
+  "publisher": {
+    "name": "ExampleAI Inc.",
+    "entity_type": "corporation",
+    "website": "https://example.ai",
+    "contact_email": "agents@example.ai",
+    "verification_uri": "did:web:example.ai#agentkey"
+  },
+  "attestations": [
+    {
+      "type": "soc2",
+      "url": "https://example.ai/compliance/soc2.pdf",
+      "valid_until": "2026-06-30",
+      "description": "SOC-2 Type II report covering security & availability."
+    }
+  ],
+  "signature": "ed25519:PLACEHOLDER",
+  "last_updated": "2025-07-07T14:22:00Z",
+  "license": "CC-BY-4.0"
+}
