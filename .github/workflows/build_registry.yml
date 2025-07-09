@@ -1,0 +1,31 @@
+name: build-registry
+
+on:
+  schedule:
+    # 02:00 UTC every day
+    - cron: "0 2 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools
+        run: |
+          npm install -g ajv-cli ajv-formats
+          sudo apt-get update -y && sudo apt-get install -y jq
+
+      - name: Run crawler
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash registry/update_index.sh
+
+      - name: Commit & push if index changed
+        uses: EndBug/add-and-commit@v9
+        with:
+          add: "registry/profiles_index.json"
+          default_author: github_actions
+          message: "chore(registry): nightly index update"
+          push: true
