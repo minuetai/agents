@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AgentProfile Registry (preview)</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 2rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ddd; padding: 0.4rem; text-align: left; }
+    th { background: #f5f5f5; }
+    input { padding: 0.3rem; width: 250px; }
+  </style>
+</head>
+<body>
+  <h1>AgentProfile Registry — Preview</h1>
+  <label>Filter by skill: <input id="skillFilter" placeholder="e.g. sql-agent"></label>
+
+  <table id="tbl">
+    <thead>
+      <tr><th>Name</th><th>Skills</th><th>Safety</th><th>Link</th></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    async function load() {
+      const res = await fetch('../profiles_index.json');
+      const data = await res.json();
+      render(data);
+      document.getElementById('skillFilter').addEventListener('input', e => {
+        const term = e.target.value.toLowerCase();
+        render(data.filter(p => p.skills.join().toLowerCase().includes(term)));
+      });
+    }
+    function render(list) {
+      const rows = list.map(p => `
+        <tr>
+          <td>${p.name}</td>
+          <td>${p.skills.join(', ')}</td>
+          <td>${p.safety_grade ?? '-'}</td>
+          <td><a href="${p.url}" target="_blank">raw</a></td>
+        </tr>`).join('');
+      document.querySelector('#tbl tbody').innerHTML = rows;
+    }
+    load();
+  </script>
+</body>
+</html>
