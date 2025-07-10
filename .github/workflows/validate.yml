@@ -29,5 +29,6 @@ jobs:
       - name: Validate all example profiles
         run: |
           ajv validate \
+            -c ajv-formats \         # ← NEW (loads date / uuid / etc.)
             -s agent_profile_v0.1.json \
             -d "examples/*.json"
