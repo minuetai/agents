@@ -11,6 +11,6 @@
     "name": "EnterpriseWebNavigator",
     "skills": ["web-browse", "dom-interact"],
     "safety_grade": "A",
-    "endpoint_url": "https://api.example.ai/navigator",
+    "endpoint_url": "https://api.example.ai/navigator"
   }
 ]
