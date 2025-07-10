@@ -31,3 +31,6 @@ done
 jq -s '.' "$TMP" > "$INDEX"
 rm "$TMP"
 echo "✅  Wrote $(jq '. | length' "$INDEX") valid profiles to $INDEX"
+
+# Copy into docs/ so GitHub Pages can serve it
+cp "$INDEX" "$ROOT_DIR/docs/profiles_index.json"
