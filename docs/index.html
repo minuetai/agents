@@ -24,7 +24,7 @@
 
   <script>
     async function load() {
-      const res = await fetch('registry/profiles_index.json');
+      const res = await fetch('profiles_index.json');
       const data = await res.json();
       render(data);
       document.getElementById('skillFilter').addEventListener('input', e => {
