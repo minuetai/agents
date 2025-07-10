@@ -38,9 +38,21 @@
           <td>${p.name}</td>
           <td>${p.skills.join(', ')}</td>
           <td>${p.safety_grade ?? '-'}</td>
-          <td><a href="${p.url}" target="_blank">raw</a></td>
+          <td>
+            <a href="${p.url}" target="_blank">raw</a>
+            ${p.endpoint_url
+                ? ` | <a href="#" title="Assumes POST JSON." onclick="copyCurl('${p.endpoint_url}');return false;">copy&nbsp;cURL</a>`
+                : ''}
+          </td>
         </tr>`).join('');
       document.querySelector('#tbl tbody').innerHTML = rows;
+    }    
+    function copyCurl(endpoint) {
+      const cmd = `curl -X POST ${endpoint} -H "Content-Type: application/json" -d @payload.json`;
+      navigator.clipboard.writeText(cmd).then(
+        () => alert('cURL copied to clipboard.\n─ Assumes POST JSON. Adjust as needed.'),
+        () => alert('Failed to copy cURL command.')
+      );
     }
     load();
   </script>
