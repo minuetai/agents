@@ -20,7 +20,7 @@ while read -r api_url; do
   curl -sL "$raw_url" -o profile.json
 
   if ajv validate -s "$SCHEMA" -d profile.json &>/dev/null; then
-    jq '{url: $URL, name, skills, safety_grade} | .url=$URL' \
+    jq '{url: $URL, name, skills, safety_grade, endpoint_url} | .url=$URL' \
        --arg URL "$raw_url" profile.json >> "$TMP"
   else
     echo "  ❌ invalid JSON—skipping"
