@@ -24,7 +24,7 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
 ---
 
 ## Quick start
-
+```shell
     # clone
     git clone https://github.com/<your-handle>/agent-profile-schema.git
     cd agent-profile-schema
@@ -41,8 +41,11 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
     ajv validate \
       -s agent_profile_v0.1.json \
       -d examples/example_individual_profile.json
+```
 
 *No CLI?* Paste both schema and profile into **<https://jsonschemavalidator.io/>** and click **Validate Schema & Data**.
+
+▶ Browse the public registry: <https://phelanev.github.io/agent-profile-schema/>.
 
 ---
 
