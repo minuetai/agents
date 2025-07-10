@@ -9,6 +9,7 @@
   "cost_per_call_usd": 0.0018,
   "average_latency_ms": 450,
   "safety_grade": "B",
+  "endpoint_url": "https://api.mapsum.ai/v1/run",
   "evals": [
     {
       "name": "MapQA-20",
