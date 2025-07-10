@@ -1,0 +1,14 @@
+[
+  {
+    "url": "https://raw.githubusercontent.com/phelanev/agent-profile-schema/main/examples/example_individual_profile.json",
+    "name": "MapSummarizer",
+    "skills": ["map-rag", "route-summary"],
+    "safety_grade": "B"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/phelanev/agent-profile-schema/main/examples/example_corporate_profile.json",
+    "name": "EnterpriseWebNavigator",
+    "skills": ["web-browse", "dom-interact"],
+    "safety_grade": "A"
+  }
+]
