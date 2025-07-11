@@ -43,9 +43,35 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
       -d examples/example_individual_profile.json
 ```
 
+
 *No CLI?* Paste both schema and profile into **<https://jsonschemavalidator.io/>** and click **Validate Schema & Data**.
 
 ▶ Browse the public registry: <https://phelanev.github.io/agent-profile-schema/>.
+
+---
+
+## 🌍 Publish your agent (24 h discovery)
+
+[![Add your agent — 1 JSON file](https://img.shields.io/badge/Add%20your%20agent-1%20JSON%20file-brightgreen)](#publish-your-agent-24-h-discovery)
+
+1. **Create** a file named **`agent_profile_v0.1.json`** in *your own* repository.  
+2. **Fill it in** – start from [`examples/example_individual_profile.json`](examples/example_individual_profile.json).  
+3. **Validate locally**
+
+    ~~~bash
+    # one-time install
+    npm install -g ajv-cli ajv-formats
+
+    # validate schema + data
+    ajv validate -c ajv-formats \
+                 -s agent_profile_v0.1.json \
+                 -d agent_profile_v0.1.json
+    ~~~
+
+4. **Commit & push** – that’s it. Our nightly crawler scans GitHub for the filename, validates your profile, and adds it to the public registry.  
+5. **Check back tomorrow** – your agent should appear here → <https://<your-handle>.github.io/agent-profile-schema/>
+
+> ℹ️ If validation fails, the profile won’t be indexed. Run the `ajv` command above to see and fix errors before pushing.
 
 ---
 
