@@ -69,7 +69,7 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
     ~~~
 
 4. **Commit & push** – that’s it. Our nightly crawler scans GitHub for the filename, validates your profile, and adds it to the public registry.  
-5. **Check back tomorrow** – your agent should appear here → <https://<your-handle>.github.io/agent-profile-schema/>
+5. **Check back tomorrow** – your agent should appear here → <https://phelanev.github.io/agent-profile-schema/>
 
 > ℹ️ If validation fails, the profile won’t be indexed. Run the `ajv` command above to see and fix errors before pushing.
 

@@ -12,7 +12,7 @@ TMP=$(mktemp)
 
 echo "🔎  Searching GitHub code for agent profiles…"
 # Uses the GitHub Search API via gh CLI. Requires GH_TOKEN or GITHUB_TOKEN in CI.
-gh api search/code -f q='filename:agent_profile_v0.1.json' --jq '.items[].url' |
+gh api search/code -f q='filename:agent_profile_v0.1.json agent_id' --jq '.items[].url' |
 while read -r api_url; do
   raw_url="${api_url/github.com/raw.githubusercontent.com}"
   raw_url="${raw_url/\/blob\//\/}"
