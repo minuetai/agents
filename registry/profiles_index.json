@@ -1,16 +1,12 @@
 [
   {
-    "url": "https://raw.githubusercontent.com/phelanev/agent-profile-schema/main/examples/example_individual_profile.json",
-    "name": "MapSummarizer",
-    "skills": ["map-rag", "route-summary"],
-    "safety_grade": "B",
-    "endpoint_url": "https://api.mapsum.ai/v1/run"
-  },
-  {
-    "url": "https://raw.githubusercontent.com/phelanev/agent-profile-schema/main/examples/example_corporate_profile.json",
-    "name": "EnterpriseWebNavigator",
-    "skills": ["web-browse", "dom-interact"],
+    "url": "https://raw.githubusercontent.com/phelanev/example-agent-profile/main/agent_profile_v0.1.json",
+    "name": "Test Agent",
+    "skills": [
+      "demo",
+      "test"
+    ],
     "safety_grade": "A",
-    "endpoint_url": "https://api.example.ai/navigator"
+    "endpoint_url": "https://example.com/agent"
   }
 ]

@@ -38,7 +38,7 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
       -d agent_profile_v0.1.json
 
     # validate the individual example
-    ajv validate \
+    ajv validate -c ajv-formats \
       -s agent_profile_v0.1.json \
       -d examples/example_individual_profile.json
 ```
