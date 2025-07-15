@@ -10,6 +10,23 @@ INDEX="$ROOT_DIR/registry/profiles_index.json"
 TMP=$(mktemp)
 > "$TMP"
 
+echo "📁  Adding local example profiles…"
+# Add local examples first
+for example_file in "$ROOT_DIR"/examples/*.json; do
+  if [[ -f "$example_file" ]]; then
+    echo "- Processing $(basename "$example_file")"
+    if ajv validate -c ajv-formats -s "$SCHEMA" -d "$example_file" &>/dev/null; then
+      echo "  ✅ Valid example - adding to registry"
+      # Create a URL for the example file in the GitHub repo
+      example_url="https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/examples/$(basename "$example_file")"
+      jq '{url: $URL, name, skills, safety_grade, endpoint_url} | .url=$URL' \
+         --arg URL "$example_url" "$example_file" >> "$TMP"
+    else
+      echo "  ❌ Invalid example - skipping"
+    fi
+  fi
+done
+
 echo "🔎  Searching GitHub repositories for agent profiles…"
 # Search repositories by topic, then check each for agent profile files
 topics=("ai-agent" "autonomous-agent" "llm-agent" "agent-profile")
