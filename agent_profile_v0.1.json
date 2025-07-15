@@ -3,7 +3,7 @@
   "title": "AutonomousAgentProfile (v0.1)",
   "description": "Machine-readable résumé for autonomous AI agents.",
   "type": "object",
-  "required": ["agent_id", "name", "model_lineage", "skills", "evals", "signature"],
+  "required": ["agent_id", "name", "model_lineage", "skills", "evals"],
   "properties": {
 
     "agent_id": {
@@ -124,7 +124,7 @@
 
     "signature": {
       "type": "string",
-      "description": "Detached cryptographic signature covering all hashable fields."
+      "description": "Detached cryptographic signature covering all hashable fields. Optional in v0.1 but will be required in future versions."
     },
 
     "tags": {
