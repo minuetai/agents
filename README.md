@@ -54,9 +54,12 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
 
 [![Add your agent — 1 JSON file](https://img.shields.io/badge/Add%20your%20agent-1%20JSON%20file-brightgreen)](#publish-your-agent-24-h-discovery)
 
+**✅ No setup required — just publish in your own repository!**
+
 1. **Create** a file named **`agent_profile_v0.1.json`** in *your own* repository.  
 2. **Fill it in** – start from [`examples/example_individual_profile.json`](examples/example_individual_profile.json).  
-3. **Validate locally**
+3. **Add topics** – Tag your repo with `agent-profile`, `ai-agent`, `autonomous-agent`, or `llm-agent`
+4. **Validate locally** (optional but recommended)
 
     ~~~bash
     # one-time install
@@ -68,10 +71,12 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
                  -d agent_profile_v0.1.json
     ~~~
 
-4. **Commit & push** – that’s it. Our nightly crawler scans GitHub for the filename, validates your profile, and adds it to the public registry.  
-5. **Check back tomorrow** – your agent should appear here → <https://minuetai.github.io/agent-profile-schema/>
+5. **Commit & push** – that's it. Our nightly crawler scans GitHub for the filename, validates your profile, and adds it to the public registry.  
+6. **Check back tomorrow** – your agent should appear here → <https://minuetai.github.io/agent-profile-schema/>
 
-> ℹ️ If validation fails, the profile won’t be indexed. Run the `ajv` command above to see and fix errors before pushing.
+> ℹ️ **Don't fork this repo** unless you're contributing to the schema itself. The whole point is automatic discovery from your own repository!
+
+> ℹ️ If validation fails, the profile won't be indexed. Run the `ajv` command above to see and fix errors before pushing.
 
 ---
 
