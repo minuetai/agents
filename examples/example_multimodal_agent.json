@@ -1,0 +1,36 @@
+{
+  "agent_id": "0xVISION2024",
+  "name": "VisionAnalyzer",
+  "model_lineage": {
+    "base_model": "gpt-4o-2024-08-06",
+    "finetune_date": "2024-12-01"
+  },
+  "skills": ["image-analysis", "ocr", "chart-reading", "medical-imaging", "document-processing"],
+  "cost_per_call_usd": 0.012,
+  "average_latency_ms": 800,
+  "safety_grade": "A",
+  "endpoint_url": "https://api.visionai.com/v2/analyze",
+  "evals": [
+    {
+      "name": "VQA-v2",
+      "score": 92.3,
+      "unit": "percent",
+      "date": "2024-11-15"
+    },
+    {
+      "name": "ChartQA",
+      "score": 87.1,
+      "unit": "percent", 
+      "date": "2024-11-18"
+    },
+    {
+      "name": "OCR-Bench",
+      "score": 94.7,
+      "unit": "percent",
+      "date": "2024-11-20"
+    }
+  ],
+  "signature": "ed25519:MULTIMODAL_PLACEHOLDER",
+  "last_updated": "2024-12-01T10:30:00Z",
+  "license": "CC-BY-4.0"
+}

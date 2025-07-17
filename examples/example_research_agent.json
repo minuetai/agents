@@ -1,0 +1,69 @@
+{
+  "agent_id": "0xRESEARCH456",
+  "name": "ScientificAnalyzer",
+  "model_lineage": {
+    "base_model": "llama-3.1-70b-instruct",
+    "finetune_date": "2024-09-20"
+  },
+  "skills": ["scientific-research", "data-analysis", "hypothesis-generation", "literature-review", "statistical-analysis"],
+  "cost_per_call_usd": 0.025,
+  "average_latency_ms": 950,
+  "safety_grade": "B",
+  "endpoint_url": "https://api.researchai.edu/v3/analyze",
+  "evals": [
+    {
+      "name": "SciQ",
+      "score": 88.9,
+      "unit": "percent",
+      "date": "2024-09-25"
+    },
+    {
+      "name": "PubMedQA",
+      "score": 82.3,
+      "unit": "percent",
+      "date": "2024-09-28"
+    },
+    {
+      "name": "SciFact",
+      "score": 91.7,
+      "unit": "percent",
+      "date": "2024-10-01"
+    },
+    {
+      "name": "MMLU-Science",
+      "score": 85.4,
+      "unit": "percent",
+      "date": "2024-10-05"
+    },
+    {
+      "name": "BioASQ",
+      "score": 76.2,
+      "unit": "percent",
+      "date": "2024-10-08"
+    },
+    {
+      "name": "Citation-Accuracy",
+      "score": 94.1,
+      "unit": "percent",
+      "date": "2024-10-10"
+    }
+  ],
+  "publisher": {
+    "name": "University Research Institute",
+    "entity_type": "nonprofit",
+    "website": "https://research.university.edu",
+    "contact_email": "ai-research@university.edu",
+    "verification_uri": "https://research.university.edu/.well-known/agent-verification"
+  },
+  "attestations": [
+    {
+      "type": "peer-review",
+      "url": "https://research.university.edu/publications/ai-agent-validation-2024.pdf",
+      "valid_until": "2025-09-20",
+      "description": "Peer-reviewed publication validating agent performance and methodology."
+    }
+  ],
+  "signature": "ed25519:RESEARCH_PLACEHOLDER",
+  "last_updated": "2024-10-12T14:20:00Z",
+  "license": "CC-BY-4.0"
+}
