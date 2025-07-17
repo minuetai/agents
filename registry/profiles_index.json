@@ -20,6 +20,45 @@
     "endpoint_url": "https://api.mapsum.ai/v1/run"
   },
   {
+    "url": "https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/examples/example_legal_agent.json",
+    "name": "ContractAnalyzer",
+    "skills": [
+      "contract-analysis",
+      "legal-research",
+      "compliance-check",
+      "risk-assessment",
+      "due-diligence"
+    ],
+    "safety_grade": "A",
+    "endpoint_url": "https://api.legalai.pro/v1/analyze"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/examples/example_multimodal_agent.json",
+    "name": "VisionAnalyzer",
+    "skills": [
+      "image-analysis",
+      "ocr",
+      "chart-reading",
+      "medical-imaging",
+      "document-processing"
+    ],
+    "safety_grade": "A",
+    "endpoint_url": "https://api.visionai.com/v2/analyze"
+  },
+  {
+    "url": "https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/examples/example_research_agent.json",
+    "name": "ScientificAnalyzer",
+    "skills": [
+      "scientific-research",
+      "data-analysis",
+      "hypothesis-generation",
+      "literature-review",
+      "statistical-analysis"
+    ],
+    "safety_grade": "B",
+    "endpoint_url": "https://api.researchai.edu/v3/analyze"
+  },
+  {
     "url": "https://raw.githubusercontent.com/minuetai/example-agent-profile/main/agent_profile_v0.1.json",
     "name": "Test Agent",
     "skills": [
