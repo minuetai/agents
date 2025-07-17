@@ -4,10 +4,40 @@
   <meta charset="UTF-8">
   <title>AgentProfile Registry (preview)</title>
   <style>
-    body { font-family: system-ui, sans-serif; margin: 2rem; }
-    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-    th, td { border: 1px solid #ddd; padding: 0.4rem; text-align: left; }
-    th { background: #f5f5f5; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+      margin: 2rem; 
+      background-color: #fafafa;
+      line-height: 1.6;
+    }
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      margin-top: 1rem; 
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    th, td { 
+      border: 1px solid #e9ecef; 
+      padding: 0.75rem; 
+      text-align: left; 
+      vertical-align: top;
+    }
+    th { 
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      font-weight: 600;
+      color: #495057;
+      font-size: 0.9em;
+      letter-spacing: 0.5px;
+    }
+    tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+    tr:hover {
+      background-color: #e3f2fd;
+    }
     input, select { padding: 0.3rem; margin: 0.2rem; }
     input { width: 250px; }
     select { width: 150px; }
@@ -63,6 +93,60 @@
     .latency-fast { color: #28a745; font-weight: 500; }
     .latency-medium { color: #ffc107; font-weight: 500; }
     .latency-slow { color: #dc3545; font-weight: 500; }
+    .skill-tag {
+      display: inline-block;
+      background-color: #e9ecef;
+      color: #495057;
+      padding: 0.2em 0.5em;
+      margin: 0.1em;
+      border-radius: 12px;
+      font-size: 0.8em;
+      font-weight: 500;
+      border: 1px solid #dee2e6;
+    }
+    .skill-tag:hover {
+      background-color: #dee2e6;
+      cursor: default;
+    }
+    
+    /* Mobile responsive design */
+    @media (max-width: 768px) {
+      body { margin: 1rem; }
+      .filters { 
+        flex-direction: column; 
+        gap: 0.5rem; 
+      }
+      .filter-group { 
+        width: 100%; 
+      }
+      input { width: 100%; }
+      select { width: 100%; }
+      
+      table { 
+        font-size: 0.9em; 
+      }
+      th, td { 
+        padding: 0.5rem; 
+      }
+      
+      /* Hide less critical columns on mobile */
+      .hide-mobile { 
+        display: none; 
+      }
+    }
+    
+    @media (max-width: 480px) {
+      table { 
+        font-size: 0.8em; 
+      }
+      th, td { 
+        padding: 0.3rem; 
+      }
+      .skill-tag { 
+        font-size: 0.7em; 
+        padding: 0.15em 0.4em; 
+      }
+    }
   </style>
 </head>
 <body>
@@ -105,7 +189,16 @@
 
   <table id="tbl">
     <thead>
-      <tr><th>Name</th><th>Skills</th><th>Safety</th><th>Cost</th><th>Latency</th><th>Evals</th><th>Publisher</th><th>Link</th></tr>
+      <tr>
+        <th>Name</th>
+        <th>Skills</th>
+        <th>Safety</th>
+        <th class="hide-mobile">Cost</th>
+        <th class="hide-mobile">Latency</th>
+        <th class="hide-mobile">Evals</th>
+        <th>Publisher</th>
+        <th>Link</th>
+      </tr>
     </thead>
     <tbody></tbody>
   </table>
@@ -180,11 +273,11 @@
       const rows = list.map(p => `
         <tr>
           <td>${p.name}</td>
-          <td>${p.skills.join(', ')}</td>
+          <td>${formatSkillTags(p.skills)}</td>
           <td class="safety-${p.safety_grade || 'unknown'}">${p.safety_grade ?? '-'}</td>
-          <td>$${(p.cost_per_call_usd || 0).toFixed(3)}</td>
-          <td class="${getLatencyClass(p.average_latency_ms)}">${formatLatency(p.average_latency_ms)}</td>
-          <td>${formatEvalsBadge(p.evals)}</td>
+          <td class="hide-mobile">$${(p.cost_per_call_usd || 0).toFixed(3)}</td>
+          <td class="hide-mobile ${getLatencyClass(p.average_latency_ms)}">${formatLatency(p.average_latency_ms)}</td>
+          <td class="hide-mobile">${formatEvalsBadge(p.evals)}</td>
           <td>${formatPublisherBadge(p.publisher)}</td>
           <td>
             <a href="${p.url}" target="_blank">raw</a>
@@ -194,6 +287,13 @@
           </td>
         </tr>`).join('');
       document.querySelector('#tbl tbody').innerHTML = rows;
+    }
+    
+    function formatSkillTags(skills) {
+      if (!skills || skills.length === 0) return '-';
+      return skills.map(skill => 
+        `<span class="skill-tag">${skill}</span>`
+      ).join('');
     }
     
     function getLatencyClass(latency) {
