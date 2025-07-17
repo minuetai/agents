@@ -19,7 +19,7 @@ for example_file in "$ROOT_DIR"/examples/*.json; do
       echo "  ✅ Valid example - adding to registry"
       # Create a URL for the example file in the GitHub repo
       example_url="https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/examples/$(basename "$example_file")"
-      jq '{url: $URL, name, skills, safety_grade, endpoint_url} | .url=$URL' \
+      jq '{url: $URL, name, skills, safety_grade, endpoint_url, cost_per_call_usd, average_latency_ms, evals, publisher} | .url=$URL' \
          --arg URL "$example_url" "$example_file" >> "$TMP"
     else
       echo "  ❌ Invalid example - skipping"
@@ -47,7 +47,7 @@ for topic in "${topics[@]}"; do
       
       if ajv validate -c ajv-formats -s "$SCHEMA" -d profile.json &>/dev/null; then
         echo "    ✅ Valid profile - adding to registry"
-        jq '{url: $URL, name, skills, safety_grade, endpoint_url} | .url=$URL' \
+        jq '{url: $URL, name, skills, safety_grade, endpoint_url, cost_per_call_usd, average_latency_ms, evals, publisher} | .url=$URL' \
            --arg URL "$download_url" profile.json >> "$TMP"
       else
         echo "    ❌ Invalid JSON—skipping"

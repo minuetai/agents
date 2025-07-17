@@ -7,7 +7,24 @@
       "dom-interact"
     ],
     "safety_grade": "A",
-    "endpoint_url": "https://api.example.ai/navigator"
+    "endpoint_url": "https://api.example.ai/navigator",
+    "cost_per_call_usd": 0.003,
+    "average_latency_ms": 650,
+    "evals": [
+      {
+        "name": "WebArena-v1",
+        "score": 89.5,
+        "unit": "percent",
+        "date": "2025-07-05"
+      }
+    ],
+    "publisher": {
+      "name": "ExampleAI Inc.",
+      "entity_type": "corporation",
+      "website": "https://example.ai",
+      "contact_email": "agents@example.ai",
+      "verification_uri": "did:web:example.ai#agentkey"
+    }
   },
   {
     "url": "https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/examples/example_individual_profile.json",
@@ -17,7 +34,18 @@
       "route-summary"
     ],
     "safety_grade": "B",
-    "endpoint_url": "https://api.mapsum.ai/v1/run"
+    "endpoint_url": "https://api.mapsum.ai/v1/run",
+    "cost_per_call_usd": 0.0018,
+    "average_latency_ms": 450,
+    "evals": [
+      {
+        "name": "MapQA-20",
+        "score": 84.0,
+        "unit": "percent",
+        "date": "2025-07-06"
+      }
+    ],
+    "publisher": null
   },
   {
     "url": "https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/examples/example_legal_agent.json",
@@ -30,7 +58,30 @@
       "due-diligence"
     ],
     "safety_grade": "A",
-    "endpoint_url": "https://api.legalai.pro/v1/analyze"
+    "endpoint_url": "https://api.legalai.pro/v1/analyze",
+    "cost_per_call_usd": 0.08,
+    "average_latency_ms": 1200,
+    "evals": [
+      {
+        "name": "ContractNLI",
+        "score": 89.4,
+        "unit": "percent",
+        "date": "2024-10-30"
+      },
+      {
+        "name": "LegalBench",
+        "score": 91.2,
+        "unit": "percent",
+        "date": "2024-11-05"
+      }
+    ],
+    "publisher": {
+      "name": "LegalTech Solutions Inc.",
+      "entity_type": "corporation",
+      "website": "https://legaltech.pro",
+      "contact_email": "agents@legaltech.pro",
+      "verification_uri": "https://legaltech.pro/.well-known/agent-verification"
+    }
   },
   {
     "url": "https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/examples/example_multimodal_agent.json",
@@ -43,7 +94,30 @@
       "document-processing"
     ],
     "safety_grade": "A",
-    "endpoint_url": "https://api.visionai.com/v2/analyze"
+    "endpoint_url": "https://api.visionai.com/v2/analyze",
+    "cost_per_call_usd": 0.012,
+    "average_latency_ms": 800,
+    "evals": [
+      {
+        "name": "VQA-v2",
+        "score": 92.3,
+        "unit": "percent",
+        "date": "2024-11-15"
+      },
+      {
+        "name": "ChartQA",
+        "score": 87.1,
+        "unit": "percent",
+        "date": "2024-11-18"
+      },
+      {
+        "name": "OCR-Bench",
+        "score": 94.7,
+        "unit": "percent",
+        "date": "2024-11-20"
+      }
+    ],
+    "publisher": null
   },
   {
     "url": "https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/examples/example_research_agent.json",
@@ -56,7 +130,54 @@
       "statistical-analysis"
     ],
     "safety_grade": "B",
-    "endpoint_url": "https://api.researchai.edu/v3/analyze"
+    "endpoint_url": "https://api.researchai.edu/v3/analyze",
+    "cost_per_call_usd": 0.025,
+    "average_latency_ms": 950,
+    "evals": [
+      {
+        "name": "SciQ",
+        "score": 88.9,
+        "unit": "percent",
+        "date": "2024-09-25"
+      },
+      {
+        "name": "PubMedQA",
+        "score": 82.3,
+        "unit": "percent",
+        "date": "2024-09-28"
+      },
+      {
+        "name": "SciFact",
+        "score": 91.7,
+        "unit": "percent",
+        "date": "2024-10-01"
+      },
+      {
+        "name": "MMLU-Science",
+        "score": 85.4,
+        "unit": "percent",
+        "date": "2024-10-05"
+      },
+      {
+        "name": "BioASQ",
+        "score": 76.2,
+        "unit": "percent",
+        "date": "2024-10-08"
+      },
+      {
+        "name": "Citation-Accuracy",
+        "score": 94.1,
+        "unit": "percent",
+        "date": "2024-10-10"
+      }
+    ],
+    "publisher": {
+      "name": "University Research Institute",
+      "entity_type": "nonprofit",
+      "website": "https://research.university.edu",
+      "contact_email": "ai-research@university.edu",
+      "verification_uri": "https://research.university.edu/.well-known/agent-verification"
+    }
   },
   {
     "url": "https://raw.githubusercontent.com/minuetai/example-agent-profile/main/agent_profile_v0.1.json",
@@ -66,6 +187,10 @@
       "test"
     ],
     "safety_grade": "A",
-    "endpoint_url": "https://example.com/agent"
+    "endpoint_url": "https://example.com/agent",
+    "cost_per_call_usd": 0.01,
+    "average_latency_ms": 150,
+    "evals": [],
+    "publisher": null
   }
 ]

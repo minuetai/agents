@@ -32,6 +32,37 @@
     .safety-A { color: #28a745; font-weight: bold; }
     .safety-B { color: #ffc107; font-weight: bold; }
     .safety-C { color: #dc3545; font-weight: bold; }
+    .badge {
+      display: inline-block;
+      padding: 0.25em 0.5em;
+      font-size: 0.75em;
+      font-weight: 500;
+      border-radius: 0.25rem;
+      margin: 0.1em;
+    }
+    .badge-eval {
+      background-color: #e9ecef;
+      color: #495057;
+    }
+    .badge-publisher-individual {
+      background-color: #d1ecf1;
+      color: #0c5460;
+    }
+    .badge-publisher-corporation {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+    .badge-publisher-nonprofit {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .badge-publisher-public-sector {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    .latency-fast { color: #28a745; font-weight: 500; }
+    .latency-medium { color: #ffc107; font-weight: 500; }
+    .latency-slow { color: #dc3545; font-weight: 500; }
   </style>
 </head>
 <body>
@@ -74,7 +105,7 @@
 
   <table id="tbl">
     <thead>
-      <tr><th>Name</th><th>Skills</th><th>Safety</th><th>Cost</th><th>Link</th></tr>
+      <tr><th>Name</th><th>Skills</th><th>Safety</th><th>Cost</th><th>Latency</th><th>Evals</th><th>Publisher</th><th>Link</th></tr>
     </thead>
     <tbody></tbody>
   </table>
@@ -86,10 +117,13 @@
       const res = await fetch('https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/registry/profiles_index.json');
       allProfiles = await res.json();
       
-      // Add missing cost data for profiles that don't have it
+      // Add missing data for profiles that don't have it
       allProfiles = allProfiles.map(p => ({
         ...p,
-        cost_per_call_usd: p.cost_per_call_usd ?? 0.02 // Default for display
+        cost_per_call_usd: p.cost_per_call_usd ?? 0.02, // Default for display
+        average_latency_ms: p.average_latency_ms ?? 500, // Default for display
+        evals: p.evals ?? [],
+        publisher: p.publisher ?? null
       }));
       
       applyFilters();
@@ -149,6 +183,9 @@
           <td>${p.skills.join(', ')}</td>
           <td class="safety-${p.safety_grade || 'unknown'}">${p.safety_grade ?? '-'}</td>
           <td>$${(p.cost_per_call_usd || 0).toFixed(3)}</td>
+          <td class="${getLatencyClass(p.average_latency_ms)}">${formatLatency(p.average_latency_ms)}</td>
+          <td>${formatEvalsBadge(p.evals)}</td>
+          <td>${formatPublisherBadge(p.publisher)}</td>
           <td>
             <a href="${p.url}" target="_blank">raw</a>
             ${p.endpoint_url
@@ -157,6 +194,38 @@
           </td>
         </tr>`).join('');
       document.querySelector('#tbl tbody').innerHTML = rows;
+    }
+    
+    function getLatencyClass(latency) {
+      if (!latency) return '';
+      if (latency < 500) return 'latency-fast';
+      if (latency < 1000) return 'latency-medium';
+      return 'latency-slow';
+    }
+    
+    function formatLatency(latency) {
+      if (!latency) return '-';
+      if (latency < 1000) return `${latency}ms`;
+      return `${(latency / 1000).toFixed(1)}s`;
+    }
+    
+    function formatEvalsBadge(evals) {
+      if (!evals || evals.length === 0) return '-';
+      return `<span class="badge badge-eval">${evals.length} eval${evals.length === 1 ? '' : 's'}</span>`;
+    }
+    
+    function formatPublisherBadge(publisher) {
+      if (!publisher) return '<span class="badge badge-publisher-individual">Individual</span>';
+      
+      const entityType = publisher.entity_type || 'individual';
+      const displayName = {
+        'individual': 'Individual',
+        'corporation': 'Corporation', 
+        'nonprofit': 'Nonprofit',
+        'public-sector': 'Public Sector'
+      }[entityType] || 'Unknown';
+      
+      return `<span class="badge badge-publisher-${entityType}">${displayName}</span>`;
     }    
     
     function copyCurl(endpoint) {
