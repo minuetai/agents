@@ -109,6 +109,69 @@
       cursor: default;
     }
     
+    .expand-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.8em;
+      color: #007bff;
+      margin-right: 0.5rem;
+      padding: 0.2rem;
+      border-radius: 3px;
+    }
+    .expand-btn:hover {
+      background-color: #e3f2fd;
+    }
+    .expand-btn.expanded {
+      color: #dc3545;
+    }
+    
+    .details-row {
+      display: none;
+      background-color: #f8f9fa;
+      border-top: 1px solid #dee2e6;
+    }
+    .details-row.show {
+      display: table-row;
+    }
+    .details-content {
+      padding: 1rem;
+      font-size: 0.9em;
+    }
+    .details-section {
+      margin-bottom: 1rem;
+    }
+    .details-section h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1em;
+      color: #495057;
+    }
+    .eval-item {
+      background: white;
+      padding: 0.5rem;
+      margin: 0.3rem 0;
+      border-radius: 4px;
+      border-left: 3px solid #007bff;
+    }
+    .eval-score {
+      font-weight: 600;
+      color: #28a745;
+    }
+    .attestation-badge {
+      display: inline-block;
+      background: #28a745;
+      color: white;
+      padding: 0.3rem 0.6rem;
+      border-radius: 15px;
+      font-size: 0.8em;
+      margin: 0.2rem;
+      text-decoration: none;
+    }
+    .attestation-badge:hover {
+      background: #218838;
+      color: white;
+    }
+    
     /* Mobile responsive design */
     @media (max-width: 768px) {
       body { margin: 1rem; }
@@ -205,6 +268,7 @@
 
   <script>
     let allProfiles = [];
+    let filteredProfiles = [];
     
     async function load() {
       const res = await fetch('https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/registry/profiles_index.json');
@@ -266,13 +330,17 @@
         }
       });
       
+      filteredProfiles = filtered;
       render(filtered);
     }
     
     function render(list) {
-      const rows = list.map(p => `
+      const rows = list.map((p, index) => `
         <tr>
-          <td>${p.name}</td>
+          <td>
+            <button class="expand-btn" onclick="toggleDetails(${index})" id="expand-${index}">▶</button>
+            ${p.name}
+          </td>
           <td>${formatSkillTags(p.skills)}</td>
           <td class="safety-${p.safety_grade || 'unknown'}">${p.safety_grade ?? '-'}</td>
           <td class="hide-mobile">$${(p.cost_per_call_usd || 0).toFixed(3)}</td>
@@ -284,6 +352,13 @@
             ${p.endpoint_url
                 ? ` | <a href="#" title="Assumes POST JSON." onclick="copyCurl('${p.endpoint_url}');return false;">copy&nbsp;cURL</a>`
                 : ''}
+          </td>
+        </tr>
+        <tr class="details-row" id="details-${index}">
+          <td colspan="8">
+            <div class="details-content">
+              ${formatAgentDetails(index)}
+            </div>
           </td>
         </tr>`).join('');
       document.querySelector('#tbl tbody').innerHTML = rows;
@@ -327,6 +402,89 @@
       
       return `<span class="badge badge-publisher-${entityType}">${displayName}</span>`;
     }    
+    
+    function toggleDetails(index) {
+      const detailsRow = document.getElementById(`details-${index}`);
+      const expandBtn = document.getElementById(`expand-${index}`);
+      
+      if (detailsRow.classList.contains('show')) {
+        detailsRow.classList.remove('show');
+        expandBtn.textContent = '▶';
+        expandBtn.classList.remove('expanded');
+      } else {
+        detailsRow.classList.add('show');
+        expandBtn.textContent = '▼';
+        expandBtn.classList.add('expanded');
+      }
+    }
+    
+    function formatAgentDetails(index) {
+      const profile = filteredProfiles[index];
+      let details = '';
+      
+      // Evaluations section
+      if (profile.evals && profile.evals.length > 0) {
+        details += '<div class="details-section">';
+        details += '<h4>Evaluation Scores</h4>';
+        profile.evals.forEach(eval => {
+          details += `<div class="eval-item">
+            <strong>${eval.name}</strong>: 
+            <span class="eval-score">${eval.score}${eval.unit === 'percent' ? '%' : ` ${eval.unit}`}</span>
+            <span style="color: #6c757d; margin-left: 0.5rem;">(${eval.date})</span>
+          </div>`;
+        });
+        details += '</div>';
+      }
+      
+      // Attestations section
+      if (profile.attestations && profile.attestations.length > 0) {
+        details += '<div class="details-section">';
+        details += '<h4>Attestations</h4>';
+        profile.attestations.forEach(att => {
+          details += `<a href="${att.url}" target="_blank" class="attestation-badge">
+            ${att.type.toUpperCase()} ${att.description ? `- ${att.description}` : ''}
+          </a>`;
+        });
+        details += '</div>';
+      }
+      
+      // Model lineage section
+      if (profile.model_lineage) {
+        details += '<div class="details-section">';
+        details += '<h4>Model Information</h4>';
+        details += `<div>Base Model: <strong>${profile.model_lineage.base_model}</strong></div>`;
+        if (profile.model_lineage.finetune_date) {
+          details += `<div>Fine-tuned: ${profile.model_lineage.finetune_date}</div>`;
+        }
+        details += '</div>';
+      }
+      
+      // Publisher verification section
+      if (profile.publisher) {
+        details += '<div class="details-section">';
+        details += '<h4>Publisher Details</h4>';
+        details += `<div><strong>${profile.publisher.name}</strong></div>`;
+        if (profile.publisher.website) {
+          details += `<div>Website: <a href="${profile.publisher.website}" target="_blank">${profile.publisher.website}</a></div>`;
+        }
+        if (profile.publisher.contact_email) {
+          details += `<div>Contact: ${profile.publisher.contact_email}</div>`;
+        }
+        if (profile.publisher.verification_uri) {
+          details += `<div>Verification: <a href="${profile.publisher.verification_uri}" target="_blank" class="attestation-badge">Verified Publisher</a></div>`;
+        }
+        details += '</div>';
+      }
+      
+      // Last updated
+      if (profile.last_updated) {
+        details += '<div class="details-section">';
+        details += `<div style="color: #6c757d; font-size: 0.85em;">Last updated: ${new Date(profile.last_updated).toLocaleDateString()}</div>`;
+        details += '</div>';
+      }
+      
+      return details || '<div style="color: #6c757d;">No additional details available</div>';
+    }
     
     function copyCurl(endpoint) {
       const cmd = `curl -X POST ${endpoint} -H "Content-Type: application/json" -d @payload.json`;
