@@ -175,6 +175,22 @@
       color: white;
     }
     
+    .export-btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.75em;
+      margin-left: 0.5rem;
+      transition: background-color 0.2s;
+      display: inline-block;
+    }
+    .export-btn:hover {
+      background: #0056b3;
+    }
+    
     /* Mobile responsive design */
     @media (max-width: 768px) {
       body { margin: 1rem; }
@@ -243,13 +259,17 @@
       </label>
     </div>
     <div class="filter-group">
-      <label>Sort by: 
-        <select id="sortBy">
-          <option value="name">Name</option>
-          <option value="safety_grade">Safety Grade</option>
-          <option value="cost">Cost</option>
-        </select>
-      </label>
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <label>Sort by: 
+          <select id="sortBy">
+            <option value="name">Name</option>
+            <option value="safety_grade">Safety Grade</option>
+            <option value="cost">Cost</option>
+          </select>
+        </label>
+        <button id="exportCSV" class="export-btn">CSV</button>
+        <button id="exportJSON" class="export-btn">JSON</button>
+      </div>
     </div>
   </div>
 
@@ -293,6 +313,10 @@
       document.getElementById('safetyFilter').addEventListener('change', applyFilters);
       document.getElementById('costFilter').addEventListener('change', applyFilters);
       document.getElementById('sortBy').addEventListener('change', applyFilters);
+      
+      // Add export button listeners
+      document.getElementById('exportCSV').addEventListener('click', exportToCSV);
+      document.getElementById('exportJSON').addEventListener('click', exportToJSON);
     }
     
     function applyFilters() {
@@ -489,6 +513,43 @@
       }
       
       return details || '<div style="color: #6c757d;">No additional details available</div>';
+    }
+    
+    function exportToCSV() {
+      const headers = ['Name', 'Skills', 'Safety Grade', 'Cost (USD)', 'Latency (ms)', 'Evaluations', 'Publisher', 'URL'];
+      const rows = filteredProfiles.map(p => [
+        p.name,
+        p.skills ? p.skills.join('; ') : '',
+        p.safety_grade || '',
+        p.cost_per_call_usd || '',
+        p.average_latency_ms || '',
+        p.evals ? p.evals.length : 0,
+        p.publisher ? p.publisher.name || 'Individual' : 'Individual',
+        p.url
+      ]);
+      
+      const csvContent = [headers, ...rows]
+        .map(row => row.map(field => `"${String(field).replace(/"/g, '""')}"`).join(','))
+        .join('\n');
+      
+      downloadFile(csvContent, 'agent-profiles.csv', 'text/csv');
+    }
+    
+    function exportToJSON() {
+      const jsonContent = JSON.stringify(filteredProfiles, null, 2);
+      downloadFile(jsonContent, 'agent-profiles.json', 'application/json');
+    }
+    
+    function downloadFile(content, filename, contentType) {
+      const blob = new Blob([content], { type: contentType });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     }
     
     function copyCurl(endpoint) {
