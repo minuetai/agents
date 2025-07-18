@@ -191,6 +191,14 @@
       background: #0056b3;
     }
     
+    .highlight {
+      background-color: #fff3cd;
+      color: #856404;
+      padding: 0.1em 0.2em;
+      border-radius: 3px;
+      font-weight: 500;
+    }
+    
     /* Mobile responsive design */
     @media (max-width: 768px) {
       body { margin: 1rem; }
@@ -362,15 +370,19 @@
     }
     
     function render(list) {
+      // Get current search terms for highlighting
+      const skillTerm = document.getElementById('skillFilter').value.toLowerCase();
+      const searchTerms = skillTerm ? skillTerm.split(',').map(term => term.trim()).filter(term => term.length > 0) : [];
+      
       const rows = list.map((p, index) => `
         <tr>
           <td>
             <div style="display: flex; align-items: center; white-space: nowrap;">
               <button class="expand-btn" onclick="toggleDetails(${index})" id="expand-${index}">▶</button>
-              <span>${p.name}</span>
+              <span>${highlightText(p.name, searchTerms)}</span>
             </div>
           </td>
-          <td>${formatSkillTags(p.skills)}</td>
+          <td>${formatSkillTags(p.skills, searchTerms)}</td>
           <td class="safety-${p.safety_grade || 'unknown'}">${p.safety_grade ?? '-'}</td>
           <td class="hide-mobile">$${(p.cost_per_call_usd || 0).toFixed(3)}</td>
           <td class="hide-mobile ${getLatencyClass(p.average_latency_ms)}">${formatLatency(p.average_latency_ms)}</td>
@@ -393,10 +405,24 @@
       document.querySelector('#tbl tbody').innerHTML = rows;
     }
     
-    function formatSkillTags(skills) {
+    function highlightText(text, searchTerms) {
+      if (!searchTerms || searchTerms.length === 0) return text;
+      
+      let highlightedText = text;
+      searchTerms.forEach(term => {
+        if (term.length > 0) {
+          const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+          highlightedText = highlightedText.replace(regex, '<span class="highlight">$1</span>');
+        }
+      });
+      
+      return highlightedText;
+    }
+    
+    function formatSkillTags(skills, searchTerms = []) {
       if (!skills || skills.length === 0) return '-';
       return skills.map(skill => 
-        `<span class="skill-tag">${skill}</span>`
+        `<span class="skill-tag">${highlightText(skill, searchTerms)}</span>`
       ).join('');
     }
     
