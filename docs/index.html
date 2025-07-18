@@ -118,6 +118,9 @@
       margin-right: 0.5rem;
       padding: 0.2rem;
       border-radius: 3px;
+      display: inline-block;
+      vertical-align: top;
+      flex-shrink: 0;
     }
     .expand-btn:hover {
       background-color: #e3f2fd;
@@ -338,8 +341,10 @@
       const rows = list.map((p, index) => `
         <tr>
           <td>
-            <button class="expand-btn" onclick="toggleDetails(${index})" id="expand-${index}">▶</button>
-            ${p.name}
+            <div style="display: flex; align-items: center; white-space: nowrap;">
+              <button class="expand-btn" onclick="toggleDetails(${index})" id="expand-${index}">▶</button>
+              <span>${p.name}</span>
+            </div>
           </td>
           <td>${formatSkillTags(p.skills)}</td>
           <td class="safety-${p.safety_grade || 'unknown'}">${p.safety_grade ?? '-'}</td>
