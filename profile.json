@@ -1,0 +1,14 @@
+{
+  "agent_id": "test-agent-001",
+  "name": "Test Agent",
+  "model_lineage": {
+    "base_model": "gpt-4",
+    "finetune_date": "2024-01-15"
+  },
+  "skills": ["demo", "test"],
+  "cost_per_call_usd": 0.01,
+  "average_latency_ms": 150,
+  "safety_grade": "A",
+  "endpoint_url": "https://example.com/agent",
+  "evals": []
+}

@@ -46,7 +46,7 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
 
 *No CLI?* Paste both schema and profile into **<https://jsonschemavalidator.io/>** and click **Validate Schema & Data**.
 
-▶ Browse the public registry: <https://minuetai.github.io/agent-profile-schema/>.
+▶ Browse the public registry: <https://cialint.github.io/agent-profile-schema/>.
 
 ---
 
@@ -72,7 +72,7 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
     ~~~
 
 5. **Commit & push** – that's it. Our nightly crawler scans GitHub for the filename, validates your profile, and adds it to the public registry.  
-6. **Check back tomorrow** – your agent should appear here → <https://minuetai.github.io/agent-profile-schema/>
+6. **Check back tomorrow** – your agent should appear here → <https://cialint.github.io/agent-profile-schema/>
 
 > ℹ️ **Don't fork this repo** unless you're contributing to the schema itself. The whole point is automatic discovery from your own repository!
 

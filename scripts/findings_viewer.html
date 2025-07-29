@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Agent Discovery Findings</title>
+  <style>
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+      margin: 2rem; 
+      background-color: #fafafa;
+      line-height: 1.6;
+    }
+    .header {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .stats {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .stat {
+      background: #e9ecef;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    .finding {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-left: 4px solid #007bff;
+    }
+    .finding.github {
+      border-left-color: #28a745;
+    }
+    .finding.arxiv {
+      border-left-color: #dc3545;
+    }
+    .finding-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+    .finding-title {
+      font-size: 1.2em;
+      font-weight: 600;
+      margin: 0;
+    }
+    .finding-title a {
+      text-decoration: none;
+      color: #333;
+    }
+    .finding-title a:hover {
+      color: #007bff;
+    }
+    .source-badge {
+      background: #007bff;
+      color: white;
+      padding: 0.2rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.8em;
+      font-weight: 500;
+    }
+    .source-badge.github {
+      background: #28a745;
+    }
+    .source-badge.arxiv {
+      background: #dc3545;
+    }
+    .finding-meta {
+      color: #6c757d;
+      font-size: 0.9em;
+      margin-bottom: 0.5rem;
+    }
+    .finding-description {
+      color: #495057;
+      margin-bottom: 1rem;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+    .tag {
+      background: #e9ecef;
+      color: #495057;
+      padding: 0.2em 0.5em;
+      border-radius: 12px;
+      font-size: 0.8em;
+    }
+    .stars {
+      color: #ffc107;
+      font-weight: 500;
+    }
+    .filters {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    select, input {
+      padding: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .relevance-score {
+      background: #fff3cd;
+      color: #856404;
+      padding: 0.2em 0.5em;
+      border-radius: 4px;
+      font-size: 0.8em;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Agent Discovery Findings</h1>
+    <div id="scan-info"></div>
+    <div class="stats" id="stats"></div>
+  </div>
+  
+  <div class="filters">
+    <label>
+      Source: 
+      <select id="sourceFilter">
+        <option value="">All Sources</option>
+        <option value="github">GitHub</option>
+        <option value="arxiv">arXiv</option>
+      </select>
+    </label>
+    <label>
+      Min Stars (GitHub): 
+      <input type="number" id="starsFilter" value="0" min="0">
+    </label>
+    <label>
+      Search: 
+      <input type="text" id="searchFilter" placeholder="Search title/description">
+    </label>
+  </div>
+  
+  <div id="findings"></div>
+
+  <script>
+    let allFindings = [];
+    let filteredFindings = [];
+
+    async function loadFindings() {
+      try {
+        // Get the most recent findings file
+        const response = await fetch('discovery_output/agent_findings_20250725_151514.json');
+        const data = await response.json();
+        
+        allFindings = data.findings;
+        
+        // Display scan info
+        document.getElementById('scan-info').innerHTML = `
+          <strong>Scan Date:</strong> ${new Date(data.scan_date).toLocaleString()}<br>
+          <strong>Total Findings:</strong> ${data.total_findings}
+        `;
+        
+        // Display stats
+        const stats = {};
+        allFindings.forEach(f => {
+          stats[f.source] = (stats[f.source] || 0) + 1;
+        });
+        
+        document.getElementById('stats').innerHTML = Object.entries(stats)
+          .map(([source, count]) => `<div class="stat">${source}: ${count}</div>`)
+          .join('');
+        
+        applyFilters();
+        
+      } catch (error) {
+        document.getElementById('findings').innerHTML = `
+          <div class="finding">
+            <h3>Error loading findings</h3>
+            <p>Could not load the findings file. Make sure you're running this from the correct directory.</p>
+            <p>Error: ${error.message}</p>
+          </div>
+        `;
+      }
+    }
+
+    function applyFilters() {
+      const sourceFilter = document.getElementById('sourceFilter').value;
+      const starsFilter = parseInt(document.getElementById('starsFilter').value) || 0;
+      const searchFilter = document.getElementById('searchFilter').value.toLowerCase();
+
+      filteredFindings = allFindings.filter(finding => {
+        // Source filter
+        if (sourceFilter && finding.source !== sourceFilter) return false;
+        
+        // Stars filter (only for GitHub)
+        if (finding.source === 'github' && finding.stars < starsFilter) return false;
+        
+        // Search filter
+        if (searchFilter) {
+          const searchText = `${finding.title} ${finding.description}`.toLowerCase();
+          if (!searchText.includes(searchFilter)) return false;
+        }
+        
+        return true;
+      });
+
+      renderFindings();
+    }
+
+    function renderFindings() {
+      const container = document.getElementById('findings');
+      
+      if (filteredFindings.length === 0) {
+        container.innerHTML = '<div class="finding">No findings match your filters.</div>';
+        return;
+      }
+
+      container.innerHTML = filteredFindings.map(finding => {
+        let metaInfo = '';
+        let tags = '';
+        
+        if (finding.source === 'github') {
+          metaInfo = `
+            <div class="finding-meta">
+              <span class="stars">⭐ ${finding.stars}</span> • 
+              Language: ${finding.language || 'Unknown'} • 
+              Updated: ${new Date(finding.updated_at).toLocaleDateString()}
+            </div>
+          `;
+          
+          if (finding.topics && finding.topics.length > 0) {
+            tags = `
+              <div class="tags">
+                ${finding.topics.slice(0, 8).map(topic => `<span class="tag">${topic}</span>`).join('')}
+                ${finding.topics.length > 8 ? `<span class="tag">+${finding.topics.length - 8} more</span>` : ''}
+              </div>
+            `;
+          }
+        } else if (finding.source === 'arxiv') {
+          metaInfo = `
+            <div class="finding-meta">
+              Published: ${new Date(finding.published_at).toLocaleDateString()}
+            </div>
+          `;
+        }
+
+        return `
+          <div class="finding ${finding.source}">
+            <div class="finding-header">
+              <h3 class="finding-title">
+                <a href="${finding.url}" target="_blank">${finding.title}</a>
+              </h3>
+              <span class="source-badge ${finding.source}">${finding.source}</span>
+            </div>
+            
+            ${metaInfo}
+            
+            <div class="finding-description">
+              ${finding.description || 'No description available'}
+            </div>
+            
+            ${tags}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Event listeners
+    document.getElementById('sourceFilter').addEventListener('change', applyFilters);
+    document.getElementById('starsFilter').addEventListener('input', applyFilters);
+    document.getElementById('searchFilter').addEventListener('input', applyFilters);
+
+    // Load findings on page load
+    loadFindings();
+  </script>
+</body>
+</html>

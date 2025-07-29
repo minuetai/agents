@@ -1,6 +1,6 @@
 [
   {
-    "url": "https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/examples/example_corporate_profile.json",
+    "url": "https://raw.githubusercontent.com/cialint/agent-profile-schema/main/examples/example_corporate_profile.json",
     "name": "EnterpriseWebNavigator",
     "skills": [
       "web-browse",
@@ -27,7 +27,7 @@
     }
   },
   {
-    "url": "https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/examples/example_individual_profile.json",
+    "url": "https://raw.githubusercontent.com/cialint/agent-profile-schema/main/examples/example_individual_profile.json",
     "name": "MapSummarizer",
     "skills": [
       "map-rag",
@@ -48,7 +48,7 @@
     "publisher": null
   },
   {
-    "url": "https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/examples/example_legal_agent.json",
+    "url": "https://raw.githubusercontent.com/cialint/agent-profile-schema/main/examples/example_legal_agent.json",
     "name": "ContractAnalyzer",
     "skills": [
       "contract-analysis",
@@ -84,7 +84,7 @@
     }
   },
   {
-    "url": "https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/examples/example_multimodal_agent.json",
+    "url": "https://raw.githubusercontent.com/cialint/agent-profile-schema/main/examples/example_multimodal_agent.json",
     "name": "VisionAnalyzer",
     "skills": [
       "image-analysis",
@@ -120,7 +120,7 @@
     "publisher": null
   },
   {
-    "url": "https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/examples/example_research_agent.json",
+    "url": "https://raw.githubusercontent.com/cialint/agent-profile-schema/main/examples/example_research_agent.json",
     "name": "ScientificAnalyzer",
     "skills": [
       "scientific-research",
@@ -180,7 +180,7 @@
     }
   },
   {
-    "url": "https://raw.githubusercontent.com/minuetai/example-agent-profile/main/agent_profile_v0.1.json",
+    "url": "https://raw.githubusercontent.com/cialint/example-agent-profile/main/agent_profile_v0.1.json",
     "name": "Test Agent",
     "skills": [
       "demo",
