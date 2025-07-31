@@ -1,0 +1,265 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AutonomousAgentProfile (v0.2)",
+  "description": "Machine-readable résumé for autonomous AI agents - business-ready edition.",
+  "type": "object",
+  "required": ["agent_id", "name", "model_lineage", "skills", "evals"],
+  "properties": {
+
+    "agent_id": {
+      "type": "string",
+      "description": "Stable UUID, DID, or on-chain address uniquely identifying the agent."
+    },
+
+    "name": {
+      "type": "string",
+      "description": "Human-readable handle (40 characters max)."
+    },
+
+    "model_lineage": {
+      "type": "object",
+      "required": ["base_model", "finetune_date"],
+      "properties": {
+        "base_model":      { "type": "string", "description": "e.g. 'gpt-4o-mini-2025-06-15'" },
+        "checkpoint_hash": { "type": "string", "description": "SHA-256 or similar hash, if available." },
+        "finetune_date":   { "type": "string", "format": "date" }
+      },
+      "$comment": "Captures provenance of the model weights this agent relies on."
+    },
+
+    "skills": {
+      "type": "array",
+      "description": "Free-form capability tags, e.g. ['sql-agent', 'xss-scanner'].",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+
+    "workplace_tasks": {
+      "type": "array",
+      "description": "Specific business functions this agent can perform, e.g. ['code_review', 'documentation', 'customer_support'].",
+      "items": { "type": "string" }
+    },
+
+    "cost_per_call_usd": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Observed or stated average cost in US dollars per inference/tool cycle. Deprecated in favor of pricing_model for complex scenarios."
+    },
+
+    "pricing_model": {
+      "type": "object",
+      "description": "Detailed pricing structure for complex billing scenarios.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["free", "fixed", "usage_based", "outcome_based", "hybrid", "negotiable"],
+          "description": "Primary pricing strategy."
+        },
+        "base_cost_usd": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Base cost per call or fixed fee."
+        },
+        "variable_costs": {
+          "type": "object",
+          "description": "Additional cost components.",
+          "properties": {
+            "per_token_usd": { "type": "number", "minimum": 0 },
+            "per_outcome_usd": { "type": "number", "minimum": 0 },
+            "per_minute_usd": { "type": "number", "minimum": 0 }
+          }
+        },
+        "currency": {
+          "type": "string",
+          "default": "USD",
+          "description": "ISO currency code."
+        },
+        "details": {
+          "type": "string",
+          "description": "Human-readable pricing explanation."
+        }
+      }
+    },
+
+    "token_cost_per_1k": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Estimated USD cost per 1,000 tokens, if the agent internally calls an LLM."
+    },
+
+    "accepts_payment_via": {
+      "type": "array",
+      "description": "Supported payment methods for agent-to-agent or marketplace transactions.",
+      "items": {
+        "type": "string",
+        "enum": ["stripe", "paypal", "bitcoin", "btc-lightning", "ethereum", "erc20", "manual", "none"]
+      }
+    },
+
+    "payment_contact_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Webhook or API endpoint for billing and payment processing."
+    },
+
+    "wallet_address": {
+      "type": "string",
+      "description": "Lightning or crypto address for direct payments."
+    },
+
+    "min_payment_amount_usd": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Minimum viable transaction amount."
+    },
+
+    "average_latency_ms": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Mean round-trip latency in milliseconds."
+    },
+
+    "uptime_30d_pct": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Rolling average of successful responsiveness over past 30 days."
+    },
+
+    "deployment_class": {
+      "type": "string",
+      "enum": ["hosted", "on_device", "ephemeral"],
+      "description": "User-friendly deployment category."
+    },
+
+    "deployment_type": {
+      "type": "string",
+      "description": "System-level deployment hint, e.g. 'hf-endpoint', 'bedrock-agent', 'cloudflare-worker'."
+    },
+
+    "safety_grade": {
+      "type": "string",
+      "enum": ["A", "B", "C", "D", "E"],
+      "description": "Latest audit outcome; A = highest safety."
+    },
+
+    "self_identification": {
+      "type": "boolean",
+      "description": "Whether the agent discloses that it is an AI agent in interactions."
+    },
+
+    "human_oversight_required": {
+      "type": "string",
+      "enum": ["none", "minimal", "continuous"],
+      "description": "Level of human supervision needed for safe operation."
+    },
+
+    "interaction_patterns": {
+      "type": "array",
+      "description": "Communication modes this agent supports.",
+      "items": {
+        "type": "string",
+        "enum": ["chat", "ambient", "notify", "question", "review", "event_driven"]
+      }
+    },
+
+    "event_driven": {
+      "type": "boolean",
+      "description": "Whether the agent can respond to event streams rather than just direct messages."
+    },
+
+    "evals": {
+      "type": "array",
+      "description": "Benchmark results relevant to this agent.",
+      "items": {
+        "type": "object",
+        "required": ["name", "score", "date"],
+        "properties": {
+          "name":  { "type": "string" },
+          "score": { "type": "number" },
+          "unit":  { "type": "string", "default": "percent" },
+          "date":  { "type": "string", "format": "date" },
+          "category": { 
+            "type": "string",
+            "description": "e.g. 'workplace_tasks', 'safety', 'reasoning'"
+          }
+        }
+      }
+    },
+
+    "endpoint_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Public inference or handshake endpoint (HTTPS)."
+    },
+
+    "publisher": {
+      "type": "object",
+      "description": "Optional block for corporate or organisational publishers.",
+      "properties": {
+        "name":            { "type": "string" },
+        "entity_type":     {
+          "type": "string",
+          "enum": ["individual", "corporation", "nonprofit", "public-sector"]
+        },
+        "website":         { "type": "string", "format": "uri" },
+        "contact_email":   { "type": "string", "format": "email" },
+        "verification_uri":{ "type": "string", "format": "uri" }
+      }
+    },
+
+    "attestations": {
+      "type": "array",
+      "description": "Optional array of compliance or insurance attestations (e.g., soc2, iso27001, penetration-test, insurance).",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Short label describing the attestation kind (e.g., 'soc2', 'iso27001', 'insurance')."
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Public link to the attestation document or badge."
+          },
+          "valid_until": {
+            "type": "string",
+            "format": "date",
+            "description": "Date when this attestation expires or requires renewal."
+          },
+          "description": { "type": "string" }
+        },
+        "examples": [
+          {
+            "type": "soc2",
+            "url": "https://example.ai/compliance/soc2.pdf",
+            "valid_until": "2026-06-30",
+            "description": "SOC-2 Type II report covering security & availability."
+          }
+        ]
+      },
+      "$comment": "Common attestation 'type' values include: soc2, iso27001, pci-dss, penetration-test, insurance."
+    },
+
+    "signature": {
+      "type": "string",
+      "description": "Detached cryptographic signature covering all hashable fields. Optional in v0.2 but will be required in future versions."
+    },
+
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+
+    "last_updated": {
+      "type": "string",
+      "format": "date-time"
+    },
+
+    "license": {
+      "type": "string",
+      "default": "CC-BY-4.0"
+    }
+  }
+}

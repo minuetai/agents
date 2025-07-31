@@ -1,0 +1,96 @@
+{
+  "agent_id": "0xB2C3D4E5F6A7B8C9",
+  "name": "WorkplaceAI Pro",
+  "model_lineage": {
+    "base_model": "gpt-4o-2025-01-15",
+    "checkpoint_hash": "sha256:d4e56f78a90b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d",
+    "finetune_date": "2025-07-20"
+  },
+  "skills": [
+    "code-review",
+    "documentation",
+    "project-management",
+    "slack-integration",
+    "jira-automation"
+  ],
+  "workplace_tasks": [
+    "code_review",
+    "documentation_generation", 
+    "meeting_summarization",
+    "project_status_updates",
+    "automated_testing"
+  ],
+  "pricing_model": {
+    "type": "hybrid",
+    "base_cost_usd": 0.05,
+    "variable_costs": {
+      "per_token_usd": 0.000002,
+      "per_outcome_usd": 0.10
+    },
+    "currency": "USD",
+    "details": "$0.05 base + $0.10 per completed task + token usage"
+  },
+  "token_cost_per_1k": 0.002,
+  "accepts_payment_via": ["stripe", "btc-lightning"],
+  "payment_contact_url": "https://api.workplaceai.pro/billing",
+  "wallet_address": "lnbc1pv42x3kpp5...",
+  "min_payment_amount_usd": 0.01,
+  "average_latency_ms": 850,
+  "uptime_30d_pct": 99.7,
+  "deployment_class": "hosted",
+  "deployment_type": "k8s-service",
+  "safety_grade": "A",
+  "self_identification": true,
+  "human_oversight_required": "minimal",
+  "interaction_patterns": ["chat", "ambient", "notify", "event_driven"],
+  "event_driven": true,
+  "evals": [
+    {
+      "name": "TheAgentCompany",
+      "score": 87.5,
+      "unit": "percent",
+      "date": "2025-07-15",
+      "category": "workplace_tasks"
+    },
+    {
+      "name": "CodeReview-Bench",
+      "score": 92.3,
+      "unit": "percent", 
+      "date": "2025-07-10",
+      "category": "code_quality"
+    },
+    {
+      "name": "Safety-Eval-v2",
+      "score": 96.8,
+      "unit": "percent",
+      "date": "2025-07-05",
+      "category": "safety"
+    }
+  ],
+  "endpoint_url": "https://api.workplaceai.pro/v2/chat",
+  "publisher": {
+    "name": "WorkplaceAI Inc.",
+    "entity_type": "corporation",
+    "website": "https://workplaceai.pro",
+    "contact_email": "agents@workplaceai.pro",
+    "verification_uri": "https://workplaceai.pro/.well-known/agent-verification"
+  },
+  "attestations": [
+    {
+      "type": "soc2",
+      "url": "https://workplaceai.pro/compliance/soc2-2025.pdf",
+      "valid_until": "2026-07-31",
+      "description": "SOC-2 Type II covering security, availability, and confidentiality"
+    },
+    {
+      "type": "iso27001",
+      "url": "https://workplaceai.pro/compliance/iso27001-cert.pdf", 
+      "valid_until": "2026-03-15",
+      "description": "ISO 27001 Information Security Management certification"
+    }
+  ],
+  "signature": "ed25519:PLACEHOLDER_V2_SIGNATURE",
+  "tags": ["enterprise", "workplace", "automation", "secure"],
+  "last_updated": "2025-07-25T15:30:00Z",
+  "license": "CC-BY-4.0"
+}
