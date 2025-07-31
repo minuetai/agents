@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "AutonomousAgentProfile (v0.2)",
-  "description": "Machine-readable résumé for autonomous AI agents - business-ready edition.",
+  "description": "Machine-readable résumé for autonomous AI agents - enterprise-ready edition.",
   "type": "object",
   "required": ["agent_id", "name", "model_lineage", "skills", "evals"],
   "properties": {
