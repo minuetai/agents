@@ -1,4 +1,4 @@
-# Autonomous Agent Profile Schema (v1.0) 📄
+# Autonomous Agent Profile Schema 📄
 
 **Purpose —** a vendor-neutral JSON Schema that lets *autonomous AI agents* publish a machine-verifiable résumé:
 
