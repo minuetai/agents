@@ -16,9 +16,9 @@ git checkout -b feat/your-change
 ```
 npm install -g ajv-cli ajv-formats
 
-ajv validate -s http://json-schema.org/draft-07/schema# -d agent_profile_v0.1.json
+ajv validate -s http://json-schema.org/draft-07/schema# -d agent_profile_v1.0.json
 
-ajv validate -s agent_profile_v0.1.json -d "examples/*.json"
+ajv validate -s agent_profile_v1.0.json -d "examples/*.json"
 ```
 
 3. Commit using Conventional Commits
@@ -39,6 +39,6 @@ Our GitHub Action re-runs validation; PRs must pass CI before merge.
 
 ## Versioning policy
 
-- Files named agent_profile_v0.x.json are immutable once a release tag is cut
-- Breaking changes bump minor version (v0.2, v0.3, etc)
-- Major overhaul v1.0 when the community agrees the spec is stable
+- Schema files are immutable once a release tag is cut
+- **v1.0** is the current enterprise standard
+- Future versions follow semantic versioning principles

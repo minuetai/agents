@@ -1,4 +1,4 @@
-# Autonomous Agent Profile Schema (v0.1) 📄
+# Autonomous Agent Profile Schema (v1.0) 📄
 
 **Purpose —** a vendor-neutral JSON Schema that lets *autonomous AI agents* publish a machine-verifiable résumé:
 
@@ -15,7 +15,7 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
 
 | Path | Contents |
 |------|----------|
-| `agent_profile_v0.1.json` | **Draft-07** schema definition (comment-free, validator-ready) |
+| `agent_profile_v1.0.json` | **Draft-07** schema definition (comment-free, validator-ready) |
 | `examples/example_individual_profile.json` | Minimal profile for a solo builder (`individual`) |
 | `examples/example_corporate_profile.json`  | Profile showing optional `publisher` & `attestations` blocks |
 | `LICENSE` | MIT — applies to this repository’s code & docs |
@@ -35,11 +35,11 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
     # validate the schema itself
     ajv validate \
       -s http://json-schema.org/draft-07/schema# \
-      -d agent_profile_v0.1.json
+      -d agent_profile_v1.0.json
 
     # validate the individual example
     ajv validate -c ajv-formats \
-      -s agent_profile_v0.1.json \
+      -s agent_profile_v1.0.json \
       -d examples/example_individual_profile.json
 ```
 
@@ -56,7 +56,7 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
 
 **✅ No setup required — just publish in your own repository!**
 
-1. **Create** a file named **`agent_profile_v0.1.json`** in *your own* repository.  
+1. **Create** a file named **`agent_profile_v1.0.json`** in *your own* repository.  
 2. **Fill it in** – start from [`examples/example_individual_profile.json`](examples/example_individual_profile.json).  
 3. **Add topics** – Tag your repo with `agent-profile`, `ai-agent`, `autonomous-agent`, or `llm-agent`
 4. **Validate locally** (optional but recommended)
@@ -67,8 +67,8 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
 
     # validate schema + data
     ajv validate -c ajv-formats \
-                 -s agent_profile_v0.1.json \
-                 -d agent_profile_v0.1.json
+                 -s agent_profile_v1.0.json \
+                 -d agent_profile_v1.0.json
     ~~~
 
 5. **Commit & push** – that's it. Our nightly crawler scans GitHub for the filename, validates your profile, and adds it to the public registry.  
@@ -96,8 +96,8 @@ See full field docs inside the schema file.
 
 ## Versioning policy
 
-* **v0.1** — initial public draft (stable).  
-* Future drafts (`v0.2`, `v1.0`, …) will live in `versions/` or as new files `agent_profile_v0.X.json`.  
+* **v1.0** — enterprise standard (stable).  
+* Future versions will maintain backward compatibility where possible.  
 * Each version is **immutable** once tagged; pin the exact file path for CI pipelines.
 
 ---

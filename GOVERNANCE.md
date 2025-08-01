@@ -18,4 +18,4 @@ _All interactions should remain respectful; see GitHub’s terms of service for 
 ## Versioning
 - Schema files are named `agent_profile_v<MAJOR>.<MINOR>.json`.
 - Once a version is released (tagged), the file is **immutable**.
-- Breaking changes → increment **MINOR** (`v0.2`, `v0.3`, …) until stable `v1.0`.
+- **v1.0** is the current enterprise standard. Future versions follow semantic versioning principles.
