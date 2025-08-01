@@ -1,6 +1,11 @@
 # Discovery automation (private research tools)
 scripts/
 
+# Test files (keep locally but not in repo)
+*_profile.json
+profile.json
+test*.json
+
 # OS files
 .DS_Store
 .DS_Store?
