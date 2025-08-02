@@ -5,7 +5,7 @@
 
 set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SCHEMA="$ROOT_DIR/agent_profile_v0.1.json"
+SCHEMA="$ROOT_DIR/agent_profile_v1.0.json"
 INDEX="$ROOT_DIR/registry/profiles_index.json"
 TMP=$(mktemp)
 > "$TMP"
@@ -37,9 +37,9 @@ for topic in "${topics[@]}"; do
   while read -r repo_name; do
     echo "  - Checking $repo_name"
     
-    # Check if repo has agent_profile_v0.1.json file
-    if gh api "/repos/$repo_name/contents/agent_profile_v0.1.json" --jq '.download_url' 2>/dev/null; then
-      download_url=$(gh api "/repos/$repo_name/contents/agent_profile_v0.1.json" --jq '.download_url' 2>/dev/null)
+    # Check if repo has agent_profile_v1.0.json file
+    if gh api "/repos/$repo_name/contents/agent_profile_v1.0.json" --jq '.download_url' 2>/dev/null; then
+      download_url=$(gh api "/repos/$repo_name/contents/agent_profile_v1.0.json" --jq '.download_url' 2>/dev/null)
       echo "    ✅ Found profile at $download_url"
       
       # Download and validate the profile
