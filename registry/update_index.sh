@@ -37,15 +37,28 @@ for topic in "${topics[@]}"; do
   while read -r repo_name; do
     echo "  - Checking $repo_name"
     
-    # Check if repo has agent_profile_v1.0.json file
+    # Check for both v1.0 and v0.1 files (during transition period)
+    found_profile=false
+    
+    # Try v1.0 first
     if gh api "/repos/$repo_name/contents/agent_profile_v1.0.json" --jq '.download_url' 2>/dev/null; then
       download_url=$(gh api "/repos/$repo_name/contents/agent_profile_v1.0.json" --jq '.download_url' 2>/dev/null)
+      schema_file="$ROOT_DIR/agent_profile_v1.0.json"
+      found_profile=true
+    # Fall back to v0.1
+    elif gh api "/repos/$repo_name/contents/agent_profile_v0.1.json" --jq '.download_url' 2>/dev/null; then
+      download_url=$(gh api "/repos/$repo_name/contents/agent_profile_v0.1.json" --jq '.download_url' 2>/dev/null)
+      schema_file="$ROOT_DIR/agent_profile_v0.1.json"
+      found_profile=true
+    fi
+    
+    if [ "$found_profile" = true ]; then
       echo "    ✅ Found profile at $download_url"
       
       # Download and validate the profile
       curl -sL "$download_url" -o profile.json
       
-      if ajv validate -c ajv-formats -s "$SCHEMA" -d profile.json &>/dev/null; then
+      if ajv validate -c ajv-formats -s "$schema_file" -d profile.json &>/dev/null; then
         echo "    ✅ Valid profile - adding to registry"
         jq '{url: $URL, name, skills, safety_grade, endpoint_url, cost_per_call_usd, average_latency_ms, evals, publisher} | .url=$URL' \
            --arg URL "$download_url" profile.json >> "$TMP"
