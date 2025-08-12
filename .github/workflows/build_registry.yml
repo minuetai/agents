@@ -1,11 +1,14 @@
 name: build-registry
 
 on:
-  # Schedule disabled until expecting real profiles
+  # Schedule disabled until expecting real profiles  
   # schedule:
   #   # 02:00 UTC every day
   #   - cron: "0 2 * * *"
   workflow_dispatch: {}
+
+permissions:
+  contents: write  # Required to push commits
 
 jobs:
   crawl:
@@ -14,7 +17,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install tools
-        run: |
+        run:  < /dev/null | 
           npm install -g ajv-cli ajv-formats
           sudo apt-get update -y && sudo apt-get install -y jq
 
