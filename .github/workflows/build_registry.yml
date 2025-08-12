@@ -1,9 +1,10 @@
 name: build-registry
 
 on:
-  schedule:
-    # 02:00 UTC every day
-    - cron: "0 2 * * *"
+  # Schedule disabled until expecting real profiles
+  # schedule:
+  #   # 02:00 UTC every day
+  #   - cron: "0 2 * * *"
   workflow_dispatch: {}
 
 jobs:
