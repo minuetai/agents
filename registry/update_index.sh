@@ -41,13 +41,11 @@ for topic in "${topics[@]}"; do
     found_profile=false
     
     # Try v1.0 first
-    if gh api "/repos/$repo_name/contents/agent_profile_v1.0.json" --jq '.download_url' 2>/dev/null; then
-      download_url=$(gh api "/repos/$repo_name/contents/agent_profile_v1.0.json" --jq '.download_url' 2>/dev/null)
+    if download_url=$(gh api "/repos/$repo_name/contents/agent_profile_v1.0.json" --jq '.download_url' 2>/dev/null) && [[ "$download_url" != "null" ]]; then
       schema_file="$ROOT_DIR/agent_profile_v1.0.json"
       found_profile=true
     # Fall back to v0.1
-    elif gh api "/repos/$repo_name/contents/agent_profile_v0.1.json" --jq '.download_url' 2>/dev/null; then
-      download_url=$(gh api "/repos/$repo_name/contents/agent_profile_v0.1.json" --jq '.download_url' 2>/dev/null)
+    elif download_url=$(gh api "/repos/$repo_name/contents/agent_profile_v0.1.json" --jq '.download_url' 2>/dev/null) && [[ "$download_url" != "null" ]]; then
       schema_file="$ROOT_DIR/agent_profile_v0.1.json"
       found_profile=true
     fi
