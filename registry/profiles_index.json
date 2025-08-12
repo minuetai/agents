@@ -27,6 +27,96 @@
     }
   },
   {
+    "url": "https://raw.githubusercontent.com/cialint/agent-profile-schema/main/examples/example_enterprise_v0.2.json",
+    "name": "WorkplaceAI Pro",
+    "skills": [
+      "code-review",
+      "documentation",
+      "project-management",
+      "slack-integration",
+      "jira-automation"
+    ],
+    "safety_grade": "A",
+    "endpoint_url": "https://api.workplaceai.pro/v2/chat",
+    "cost_per_call_usd": null,
+    "average_latency_ms": 850,
+    "evals": [
+      {
+        "name": "TheAgentCompany",
+        "score": 87.5,
+        "unit": "percent",
+        "date": "2025-07-15",
+        "category": "workplace_tasks"
+      },
+      {
+        "name": "CodeReview-Bench",
+        "score": 92.3,
+        "unit": "percent",
+        "date": "2025-07-10",
+        "category": "code_quality"
+      },
+      {
+        "name": "Safety-Eval-v2",
+        "score": 96.8,
+        "unit": "percent",
+        "date": "2025-07-05",
+        "category": "safety"
+      }
+    ],
+    "publisher": {
+      "name": "WorkplaceAI Inc.",
+      "entity_type": "corporation",
+      "website": "https://workplaceai.pro",
+      "contact_email": "agents@workplaceai.pro",
+      "verification_uri": "https://workplaceai.pro/.well-known/agent-verification"
+    }
+  },
+  {
+    "url": "https://raw.githubusercontent.com/cialint/agent-profile-schema/main/examples/example_enterprise_v1.0.json",
+    "name": "WorkplaceAI Pro",
+    "skills": [
+      "code-review",
+      "documentation",
+      "project-management",
+      "slack-integration",
+      "jira-automation"
+    ],
+    "safety_grade": "A",
+    "endpoint_url": "https://api.workplaceai.pro/v2/chat",
+    "cost_per_call_usd": null,
+    "average_latency_ms": 850,
+    "evals": [
+      {
+        "name": "TheAgentCompany",
+        "score": 87.5,
+        "unit": "percent",
+        "date": "2025-07-15",
+        "category": "workplace_tasks"
+      },
+      {
+        "name": "CodeReview-Bench",
+        "score": 92.3,
+        "unit": "percent",
+        "date": "2025-07-10",
+        "category": "code_quality"
+      },
+      {
+        "name": "Safety-Eval-v2",
+        "score": 96.8,
+        "unit": "percent",
+        "date": "2025-07-05",
+        "category": "safety"
+      }
+    ],
+    "publisher": {
+      "name": "WorkplaceAI Inc.",
+      "entity_type": "corporation",
+      "website": "https://workplaceai.pro",
+      "contact_email": "agents@workplaceai.pro",
+      "verification_uri": "https://workplaceai.pro/.well-known/agent-verification"
+    }
+  },
+  {
     "url": "https://raw.githubusercontent.com/cialint/agent-profile-schema/main/examples/example_individual_profile.json",
     "name": "MapSummarizer",
     "skills": [
