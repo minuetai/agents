@@ -18,7 +18,7 @@ for example_file in "$ROOT_DIR"/examples/*.json; do
     if ajv validate -c ajv-formats -s "$SCHEMA" -d "$example_file" &>/dev/null; then
       echo "  ✅ Valid example - adding to registry"
       # Create a URL for the example file in the GitHub repo
-      example_url="https://raw.githubusercontent.com/cialint/agent-profile-schema/main/examples/$(basename "$example_file")"
+      example_url="https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/examples/$(basename "$example_file")"
       jq '{url: $URL, name, skills, safety_grade, endpoint_url, cost_per_call_usd, average_latency_ms, evals, publisher} | .url=$URL' \
          --arg URL "$example_url" "$example_file" >> "$TMP"
     else
