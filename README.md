@@ -1,4 +1,13 @@
+<div align="center">
+  <img src="minuet-logo.png" alt="Minuet Labs" width="180">
+</div>
+
 # Autonomous Agent Profile Schema 📄
+
+An open schema and registry for autonomous AI agent profiles, maintained by Minuet Labs.
+
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![CI Status](https://img.shields.io/github/actions/workflow/status/minuetai/agent-profile-schema/ci.yml?branch=main)](https://github.com/minuetai/agent-profile-schema/actions)
 
 **Purpose —** a vendor-neutral JSON Schema that lets *autonomous AI agents* publish a machine-verifiable résumé:
 
@@ -18,7 +27,11 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
 | `agent_profile_v1.0.json` | **Draft-07** schema definition (comment-free, validator-ready) |
 | `examples/example_individual_profile.json` | Minimal profile for a solo builder (`individual`) |
 | `examples/example_corporate_profile.json`  | Profile showing optional `publisher` & `attestations` blocks |
-| `LICENSE` | MIT — applies to this repository’s code & docs |
+| `examples/example_enterprise_v1.0.json` | Full v1.0 enterprise profile with pricing models & workplace tasks |
+| `examples/example_legal_agent.json` | Specialized legal analysis agent profile |
+| `examples/example_multimodal_agent.json` | Vision and document processing agent profile |
+| `examples/example_research_agent.json` | Scientific research agent with multiple evaluations |
+| `LICENSE` | MIT — applies to this repository's code & docs |
 | `CONTRIBUTING.md` | How to propose changes & run validation locally |
 
 ---
@@ -26,7 +39,7 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
 ## Quick start
 ```shell
     # clone
-    git clone https://github.com/<your-handle>/agent-profile-schema.git
+    git clone https://github.com/minuetai/agent-profile-schema.git
     cd agent-profile-schema
 
     # install validator (Node.js)
@@ -65,9 +78,9 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
     # one-time install
     npm install -g ajv-cli ajv-formats
 
-    # validate schema + data
+    # validate your profile against the schema
     ajv validate -c ajv-formats \
-                 -s agent_profile_v1.0.json \
+                 -s https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/agent_profile_v1.0.json \
                  -d agent_profile_v1.0.json
     ~~~
 
@@ -113,4 +126,12 @@ Thank you for helping build an open, interoperable future for autonomous agents!
 
 ---
 
-*Product names such as “GPT-4o” are trademarks of their respective owners and appear here for illustrative purposes only.*
+## Explore More
+
+- [Explodential.com](https://explodential.com) – Autonomous agent newsletter
+
+---
+
+© 2025 Minuet Labs LLC. Cialint™ is a trademark of Minuet Labs.
+
+*Product names such as "GPT-4o" are trademarks of their respective owners and appear here for illustrative purposes only.*
