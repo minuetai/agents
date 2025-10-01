@@ -124,14 +124,13 @@ See full field docs inside the schema file.
 
 Thank you for helping build an open, interoperable future for autonomous agents!
 
----
-
 ## Explore More
 
 - [Explodential.com](https://explodential.com) – Autonomous agent newsletter
 
 ---
 
-© 2025 Minuet Labs LLC. Cialint™ is a trademark of Minuet Labs.
-
 *Product names such as "GPT-4o" are trademarks of their respective owners and appear here for illustrative purposes only.*
+
+© 2025 Minuet Labs LLC. Cialint™ is a trademark of Minuet Labs LLC.  
+See [LEGAL.md](./LEGAL.md) for full terms.
