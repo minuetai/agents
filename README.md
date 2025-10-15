@@ -2,21 +2,21 @@
   <img src="minuet-logo.png" alt="Minuet Labs" width="180">
 </div>
 
-# Autonomous Agent Profile Schema 📄
+# Agents
 
-An open schema and registry for autonomous AI agent profiles, maintained by Minuet Labs.
+The open infrastructure for AI agent discovery and interoperability.
 
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![CI Status](https://img.shields.io/github/actions/workflow/status/minuetai/agent-profile-schema/ci.yml?branch=main)](https://github.com/minuetai/agent-profile-schema/actions)
+[![CI Status](https://img.shields.io/github/actions/workflow/status/minuetai/agents/ci.yml?branch=main)](https://github.com/minuetai/agents/actions)
 
-**Purpose —** a vendor-neutral JSON Schema that lets *autonomous AI agents* publish a machine-verifiable résumé:
+**The canonical schema** for AI agent discovery and interoperability. Enables autonomous agents to publish machine-verifiable profiles with:
 
 * identity & model lineage  
 * skills and benchmark scores  
 * cost, latency, and safety grade  
-* optional publisher + compliance attestations  
+* publisher verification & compliance attestations  
 
-The goal is to standardise how agents represent themselves so marketplaces, SaaS platforms, and even other agents can reason about trust and capability without bespoke adapters.
+Standardizes agent representation across marketplaces, platforms, and ecosystems — eliminating bespoke adapters and enabling seamless interoperability.
 
 ---
 
@@ -24,7 +24,7 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
 
 | Path | Contents |
 |------|----------|
-| `agent_profile_v1.0.json` | **Draft-07** schema definition (comment-free, validator-ready) |
+| `schema.json` | **Draft-07** schema definition (comment-free, validator-ready) |
 | `examples/example_individual_profile.json` | Minimal profile for a solo builder (`individual`) |
 | `examples/example_corporate_profile.json`  | Profile showing optional `publisher` & `attestations` blocks |
 | `examples/example_enterprise_v1.0.json` | Full v1.0 enterprise profile with pricing models & workplace tasks |
@@ -39,8 +39,8 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
 ## Quick start
 ```shell
     # clone
-    git clone https://github.com/minuetai/agent-profile-schema.git
-    cd agent-profile-schema
+    git clone https://github.com/minuetai/agents.git
+    cd agents
 
     # install validator (Node.js)
     npm install -g ajv-cli ajv-formats
@@ -48,18 +48,49 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
     # validate the schema itself
     ajv validate \
       -s http://json-schema.org/draft-07/schema# \
-      -d agent_profile_v1.0.json
+      -d schema.json
 
     # validate the individual example
     ajv validate -c ajv-formats \
-      -s agent_profile_v1.0.json \
+      -s schema.json \
       -d examples/example_individual_profile.json
 ```
 
 
 *No CLI?* Paste both schema and profile into **<https://jsonschemavalidator.io/>** and click **Validate Schema & Data**.
 
-▶ Browse the public registry: <https://minuetai.github.io/agent-profile-schema/>.
+▶ Browse the public registry: <https://minuetai.github.io/agents/>.
+
+---
+
+## Schema Versioning & URLs
+
+**Latest Version (Recommended):**
+```bash
+# Use latest schema
+curl -L https://minuetai.github.io/agents/schema.json
+
+# Validate against latest
+ajv validate -c ajv-formats \
+  -s https://minuetai.github.io/agents/schema.json \
+  -d your-agent-profile.json
+```
+
+**Pinned Version (Production):**
+```bash
+# Pin to specific version via git tag
+curl -L https://raw.githubusercontent.com/minuetai/agents/v1.0.0/schema.json
+
+# Validate against pinned version
+ajv validate -c ajv-formats \
+  -s https://raw.githubusercontent.com/minuetai/agents/v1.0.0/schema.json \
+  -d your-agent-profile.json
+```
+
+**Versioning Policy:**
+- **Latest**: Always points to current version, gets updates
+- **Pinned**: Immutable, safe for production CI/CD pipelines
+- **SemVer**: Major.minor.patch (1.0.0, 1.1.0, 2.0.0)
 
 ---
 
@@ -69,7 +100,7 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
 
 **✅ No setup required — just publish in your own repository!**
 
-1. **Create** a file named **`agent_profile_v1.0.json`** in *your own* repository.  
+1. **Create** a file named **`schema.json`** in *your own* repository.  
 2. **Fill it in** – start from [`examples/example_individual_profile.json`](examples/example_individual_profile.json).  
 3. **Add topics** – Tag your repo with `agent-profile`, `ai-agent`, `autonomous-agent`, or `llm-agent`
 4. **Validate locally** (optional but recommended)
@@ -80,12 +111,12 @@ The goal is to standardise how agents represent themselves so marketplaces, SaaS
 
     # validate your profile against the schema
     ajv validate -c ajv-formats \
-                 -s https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/agent_profile_v1.0.json \
-                 -d agent_profile_v1.0.json
+                 -s https://minuetai.github.io/agents/schema.json \
+                 -d schema.json
     ~~~
 
 5. **Commit & push** – that's it. Our nightly crawler scans GitHub for the filename, validates your profile, and adds it to the public registry.  
-6. **Check back tomorrow** – your agent should appear here → <https://minuetai.github.io/agent-profile-schema/>
+6. **Check back tomorrow** – your agent should appear here → <https://minuetai.github.io/agents/>
 
 > ℹ️ **Don't fork this repo** unless you're contributing to the schema itself. The whole point is automatic discovery from your own repository!
 
