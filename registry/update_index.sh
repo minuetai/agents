@@ -5,7 +5,7 @@
 
 set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SCHEMA="$ROOT_DIR/agent_profile_v1.0.json"
+SCHEMA="$ROOT_DIR/schema.json"
 INDEX="$ROOT_DIR/registry/profiles_index.json"
 TMP=$(mktemp)
 > "$TMP"
@@ -18,7 +18,7 @@ for example_file in "$ROOT_DIR"/examples/*.json; do
     if ajv validate -c ajv-formats -s "$SCHEMA" -d "$example_file" &>/dev/null; then
       echo "  ✅ Valid example - adding to registry"
       # Create a URL for the example file in the GitHub repo
-      example_url="https://raw.githubusercontent.com/minuetai/agent-profile-schema/main/examples/$(basename "$example_file")"
+      example_url="https://raw.githubusercontent.com/minuetai/agents/main/examples/$(basename "$example_file")"
       jq '{url: $URL, name, skills, safety_grade, endpoint_url, cost_per_call_usd, average_latency_ms, evals, publisher} | .url=$URL' \
          --arg URL "$example_url" "$example_file" >> "$TMP"
     else
@@ -37,16 +37,16 @@ for topic in "${topics[@]}"; do
   while read -r repo_name; do
     echo "  - Checking $repo_name"
     
-    # Check for both v1.0 and v0.1 files (during transition period)
+    # Check for schema.json (preferred) and legacy agent_profile_v0.1.json
     found_profile=false
     
-    # Try v1.0 first
-    if download_url=$(gh api "/repos/$repo_name/contents/agent_profile_v1.0.json" --jq '.download_url' 2>/dev/null) && [[ "$download_url" != "null" ]]; then
-      schema_file="$ROOT_DIR/agent_profile_v1.0.json"
+    # Try schema.json first (canonical)
+    if download_url=$(gh api "/repos/$repo_name/contents/schema.json" --jq '.download_url' 2>/dev/null) && [[ "$download_url" != "null" ]]; then
+      schema_file="$ROOT_DIR/schema.json"
       found_profile=true
-    # Fall back to v0.1
+    # Fall back to v0.1 (only legacy version that exists)
     elif download_url=$(gh api "/repos/$repo_name/contents/agent_profile_v0.1.json" --jq '.download_url' 2>/dev/null) && [[ "$download_url" != "null" ]]; then
-      schema_file="$ROOT_DIR/agent_profile_v0.1.json"
+      schema_file="$ROOT_DIR/schema.json"
       found_profile=true
     fi
     
