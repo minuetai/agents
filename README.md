@@ -25,11 +25,11 @@ Standardizes agent representation across marketplaces, platforms, and ecosystems
 | Path | Contents |
 |------|----------|
 | `schema.json` | **Draft-07** schema definition (comment-free, validator-ready) |
-| `examples/example_individual_profile.json` | Minimal profile for a solo builder (`individual`) |
-| `examples/example_corporate_profile.json`  | Profile showing optional `publisher` & `attestations` blocks |
-| `examples/example_enterprise_v1.0.json` | Full v1.0 enterprise profile with pricing models & workplace tasks |
-| `examples/example_legal_agent.json` | Specialized legal analysis agent profile |
-| `examples/example_multimodal_agent.json` | Vision and document processing agent profile |
+| `examples/example_individual_agent.json` | Minimal agent for a solo builder (`individual`) |
+| `examples/example_corporate_agent.json`  | Agent showing optional `publisher` & `attestations` blocks |
+| `examples/example_enterprise_v1.0.json` | Full v1.0 enterprise agent with pricing models & workplace tasks |
+| `examples/example_legal_agent.json` | Specialized legal analysis agent |
+| `examples/example_multimodal_agent.json` | Vision and document processing agent |
 | `examples/example_research_agent.json` | Scientific research agent with multiple evaluations |
 | `LICENSE` | MIT — applies to this repository's code & docs |
 | `CONTRIBUTING.md` | How to propose changes & run validation locally |
@@ -53,7 +53,7 @@ Standardizes agent representation across marketplaces, platforms, and ecosystems
     # validate the individual example
     ajv validate -c ajv-formats \
       -s schema.json \
-      -d examples/example_individual_profile.json
+      -d examples/example_individual_agent.json
 ```
 
 
@@ -101,7 +101,7 @@ ajv validate -c ajv-formats \
 **✅ No setup required — just publish in your own repository!**
 
 1. **Create** a file named **`schema.json`** in *your own* repository.  
-2. **Fill it in** – start from [`examples/example_individual_profile.json`](examples/example_individual_profile.json).  
+2. **Fill it in** – start from [`examples/example_individual_agent.json`](examples/example_individual_agent.json).  
 3. **Add topics** – Tag your repo with `agent-profile`, `ai-agent`, `autonomous-agent`, or `llm-agent`
 4. **Validate locally** (optional but recommended)
 

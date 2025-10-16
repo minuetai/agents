@@ -1,6 +1,9 @@
 # Discovery automation (private research tools)
 scripts/
 
+# Mixed context files to ignore
+docs/OUTREACH.md
+
 # Test files (keep locally but not in repo)
 *_profile.json
 profile.json

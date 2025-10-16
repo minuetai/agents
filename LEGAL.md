@@ -3,7 +3,7 @@
 ## Copyright  
 © 2025 Minuet Labs LLC. All rights reserved.  
 
-The **Minuet Agent Profile Schema**, registry code, examples, documentation, and the **registry viewer** at [https://minuetai.github.io/agent-profile-schema](https://minuetai.github.io/agent-profile-schema) are provided under the [MIT License](./LICENSE) unless otherwise noted.  
+The **Minuet Agent Schema**, registry code, examples, documentation, and the **registry viewer** at [https://minuetai.github.io/agents](https://minuetai.github.io/agents) are provided under the [MIT License](./LICENSE) unless otherwise noted.  
 
 ## Trademark  
 **Cialint™** is a trademark of Minuet Labs LLC.  

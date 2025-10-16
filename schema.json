@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://minuetai.github.io/agents/schema.json",
-  "version": "1.0.0",
   "title": "Minuet Agent Schema",
   "description": "The canonical open schema for AI agent discovery and interoperability.",
   "type": "object",
