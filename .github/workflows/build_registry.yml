@@ -29,7 +29,7 @@ jobs:
       - name: Commit & push if index changed
         uses: EndBug/add-and-commit@v9
         with:
-          add: "registry/profiles_index.json"
+          add: "registry/agents_index.json"
           default_author: github_actions
           message: "chore(registry): nightly index update"
           push: true
