@@ -26,7 +26,7 @@ jobs:
  #           -s 'http://json-schema.org/draft-07/schema#' \
  #           -d agent_profile_v0.1.json
 
-      - name: Validate all example profiles
+      - name: Validate all example agents
         run: |
           ajv validate \
             -c ajv-formats \

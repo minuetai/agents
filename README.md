@@ -9,7 +9,7 @@ The open infrastructure for AI agent discovery and interoperability.
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![CI Status](https://img.shields.io/github/actions/workflow/status/minuetai/agents/ci.yml?branch=main)](https://github.com/minuetai/agents/actions)
 
-**The canonical schema** for AI agent discovery and interoperability. Enables autonomous agents to publish machine-verifiable profiles with:
+**The canonical schema** for AI agent discovery and interoperability. Enables autonomous agents to publish machine-verifiable definitions with:
 
 * identity & model lineage  
 * skills and benchmark scores  
@@ -57,7 +57,7 @@ Standardizes agent representation across marketplaces, platforms, and ecosystems
 ```
 
 
-*No CLI?* Paste both schema and profile into **<https://jsonschemavalidator.io/>** and click **Validate Schema & Data**.
+*No CLI?* Paste both schema and agent definition into **<https://jsonschemavalidator.io/>** and click **Validate Schema & Data**.
 
 ▶ Browse the public registry: <https://minuetai.github.io/agents/>.
 
@@ -73,7 +73,7 @@ curl -L https://minuetai.github.io/agents/schema.json
 # Validate against latest
 ajv validate -c ajv-formats \
   -s https://minuetai.github.io/agents/schema.json \
-  -d your-agent-profile.json
+  -d your-agent.json
 ```
 
 **Pinned Version (Production):**
@@ -84,7 +84,7 @@ curl -L https://raw.githubusercontent.com/minuetai/agents/v1.0.0/schema.json
 # Validate against pinned version
 ajv validate -c ajv-formats \
   -s https://raw.githubusercontent.com/minuetai/agents/v1.0.0/schema.json \
-  -d your-agent-profile.json
+  -d your-agent.json
 ```
 
 **Versioning Policy:**
@@ -100,7 +100,7 @@ ajv validate -c ajv-formats \
 
 **✅ No setup required — just publish in your own repository!**
 
-1. **Create** a file named **`schema.json`** in *your own* repository.  
+1. **Create** a file named **`agent.json`** in *your own* repository.  
 2. **Fill it in** – start from [`examples/example_individual_agent.json`](examples/example_individual_agent.json).  
 3. **Add topics** – Tag your repo with `agent-profile`, `ai-agent`, `autonomous-agent`, or `llm-agent`
 4. **Validate locally** (optional but recommended)
@@ -109,18 +109,18 @@ ajv validate -c ajv-formats \
     # one-time install
     npm install -g ajv-cli ajv-formats
 
-    # validate your profile against the schema
+    # validate your agent against the schema
     ajv validate -c ajv-formats \
                  -s https://minuetai.github.io/agents/schema.json \
-                 -d schema.json
+                 -d agent.json
     ~~~
 
-5. **Commit & push** – that's it. Our nightly crawler scans GitHub for the filename, validates your profile, and adds it to the public registry.  
+5. **Commit & push** – that's it. Our nightly crawler scans GitHub for the filename, validates your agent, and adds it to the public registry.  
 6. **Check back tomorrow** – your agent should appear here → <https://minuetai.github.io/agents/>
 
 > ℹ️ **Don't fork this repo** unless you're contributing to the schema itself. The whole point is automatic discovery from your own repository!
 
-> ℹ️ If validation fails, the profile won't be indexed. Run the `ajv` command above to see and fix errors before pushing.
+> ℹ️ If validation fails, the agent won't be indexed. Run the `ajv` command above to see and fix errors before pushing.
 
 ---
 

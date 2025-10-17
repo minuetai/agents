@@ -35,6 +35,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Registry viewer with filtering and export capabilities
 - Example profiles for individual, corporate, enterprise, legal, multimodal, and research use cases
 
+## [0.2.0] - 2025-08-15
+
+### Added
+- Enterprise-ready features and capabilities
+- Enhanced pricing model support
+- Improved evaluation tracking
+- Extended workplace task specifications
+- Safety and compliance enhancements
+
+### Changed
+- Updated schema description to "enterprise-ready edition"
+- Refined field definitions for production use
+- Enhanced validation rules
+
+### Technical
+- Maintained backward compatibility with v0.1
+- Improved JSON Schema structure
+- Added enterprise example profiles
+
+## [0.1.0] - 2025-06-01
+
+### Added
+- Initial release of Autonomous Agent Schema
+- Core agent identification system with agent_id
+- Basic model lineage tracking (base_model, finetune_date, checkpoint_hash)
+- Skills framework with categories and proficiency levels
+- Evaluation system for agent capabilities
+- Publisher information and verification
+- Simple pricing models
+- Basic metadata structure
+
+### Features
+- Machine-readable agent résumé format
+- JSON Schema Draft-07 compliance
+- Required core fields: agent_id, name, model_lineage, skills, evals
+- Foundation for agent discovery and interoperability
+
 ---
 
 ## Versioning Strategy
