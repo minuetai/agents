@@ -6,8 +6,12 @@
 
 The open infrastructure for AI agent discovery and interoperability.
 
-[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![CI Status](https://img.shields.io/github/actions/workflow/status/minuetai/agents/ci.yml?branch=main)](https://github.com/minuetai/agents/actions)
+[![Schema](https://img.shields.io/badge/schema-v1.0.0-blue)](./schema.json)
+[![Mappings](https://img.shields.io/badge/mappings-v1.0.0-green)](./docs/Field-Mapping-Overview-v1.0.md)
+[![Build](https://github.com/minuetai/agents/actions/workflows/mappings-ci.yml/badge.svg)](https://github.com/minuetai/agents/actions)
+[![License](https://img.shields.io/badge/license-MIT-lightgrey)](./LICENSE)
+[![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen)](./docs/mappings/CONTRIBUTING.md)
+[![Trademark](https://img.shields.io/badge/Trademark-Cialint%E2%84%A2-black)](https://minuet.ai)
 
 **The canonical schema** for AI agent discovery and interoperability. Enables autonomous agents to publish machine-verifiable definitions with:
 

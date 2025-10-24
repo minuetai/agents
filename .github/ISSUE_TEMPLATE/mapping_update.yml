@@ -1,0 +1,77 @@
+name: Mapping Update Request
+description: Suggest a correction, addition, or refresh to field mapping documentation
+labels: ["docs/mappings", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve the Minuet Agent Schema mapping documentation!
+
+        Please provide as much detail as possible to help us review and validate your suggestion.
+
+  - type: dropdown
+    id: update-type
+    attributes:
+      label: Type of Update
+      options:
+        - Add a new framework/provider mapping
+        - Correct an existing mapping
+        - Update/refresh verification dates
+        - Report broken or outdated links
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What mapping change are you suggesting? Include field name, provider, and reasoning.
+      placeholder: |
+        Example: The `skills` field maps to LangChain's `Tool.metadata['tags']`, not `Tool.name`.
+        See: https://docs.langchain.com/docs/integrations/tools
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence / Source
+      description: Link to official documentation, SDK source, or maintainer statement that supports this change.
+      placeholder: |
+        - Official spec: https://...
+        - SDK reference: https://...
+        - Example repo: https://...
+    validations:
+      required: true
+
+  - type: textarea
+    id: affected-docs
+    attributes:
+      label: Affected Mapping Docs
+      description: Which field mapping document(s) should be updated?
+      placeholder: |
+        - `/docs/Field-Mapping-Overview-v1.0.md` (Core table)
+        - `/docs/mappings/langchain_mappings.md` (Pending table)
+
+  - type: checkboxes
+    id: verification
+    attributes:
+      label: Verification
+      options:
+        - label: I have verified all external links in my suggestion are active and stable
+          required: false
+        - label: I have checked that schema_version matches the latest schema.json
+          required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+
+        **Next Steps:**
+        - Your issue will be triaged and assigned to the mapping docs team.
+        - A PR may be created to address your suggestion.
+        - Once merged, the mapping docs will be updated and `last_full_verification` refreshed.
+
+        Thank you for supporting transparent agent interoperability!

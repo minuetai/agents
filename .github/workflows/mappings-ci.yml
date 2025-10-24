@@ -1,0 +1,77 @@
+name: mappings-ci
+
+on:
+  pull_request:
+    paths:
+      - "docs/Field-Mapping-Overview*.md"
+      - "docs/mappings/**"
+      - ".github/workflows/mappings-ci.yml"
+  push:
+    paths:
+      - "docs/Field-Mapping-Overview*.md"
+      - "docs/mappings/**"
+
+jobs:
+  validate-mappings:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install link checker
+        run: pip install linkchecker==10.3.0
+
+      - name: Link check (overview + mappings)
+        run: |
+          set -e
+          docs=$(ls docs/Field-Mapping-Overview*.md 2>/dev/null || true)
+          maps=$(ls docs/mappings/*.md 2>/dev/null || true)
+          for f in $docs $maps; do
+            echo "Checking links in $f"
+            # tolerate rate limits; warn on issues
+            linkchecker --no-warnings --check-extern "$f" || (echo "::warning ::Link check reported issues for $f"; true)
+          done
+
+      - name: Guard — schema_version matches schema.json (best effort)
+        if: hashFiles('schema.json') != ''
+        run: |
+          set -e
+          sv=$(python - << 'PY'
+import json
+with open('schema.json') as f:
+    print(json.load(f).get('version','').strip())
+PY
+)
+          echo "schema.json version: $sv"
+          for f in docs/mappings/*.md docs/Field-Mapping-Overview*.md; do
+            [ -f "$f" ] || continue
+            mv=$(grep -E '^schema_version:' "$f" | head -n1 | awk '{print $2}')
+            [ -z "$mv" ] && continue
+            if [ "$mv" != "$sv" ]; then
+              echo "::warning file=$f::schema_version ($mv) does not match schema.json version ($sv)"
+            fi
+          done
+          exit 0
+
+      - name: Guard — stale last_full_verification (>120 days)
+        run: |
+          set -e
+          now=$(date +%s)
+          for f in docs/mappings/*.md docs/Field-Mapping-Overview*.md; do
+            [ -f "$f" ] || continue
+            d=$(grep -E '^last_full_verification:' "$f" | head -n1 | awk '{print $2}')
+            [ -z "$d" ] && continue
+            ts=$(date -d "$d" +%s 2>/dev/null || true)
+            if [ -n "$ts" ]; then
+              age=$(( (now - ts) / 86400 ))
+              if [ "$age" -gt 120 ]; then
+                echo "::warning file=$f::last_full_verification is $age days old (>120). Consider a refresh."
+              fi
+            fi
+          done
+          exit 0
