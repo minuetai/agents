@@ -42,11 +42,11 @@ jobs:
         run: |
           set -e
           sv=$(python - << 'PY'
-import json
-with open('schema.json') as f:
-    print(json.load(f).get('version','').strip())
-PY
-)
+          import json
+          with open('schema.json') as f:
+              print(json.load(f).get('version','').strip())
+          PY
+          )
           echo "schema.json version: $sv"
           for f in docs/mappings/*.md docs/Field-Mapping-Overview*.md; do
             [ -f "$f" ] || continue
