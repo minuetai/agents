@@ -10,6 +10,7 @@ on:
     paths:
       - "docs/Field-Mapping-Overview*.md"
       - "docs/mappings/**"
+  workflow_dispatch:
 
 jobs:
   validate-mappings:
