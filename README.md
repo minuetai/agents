@@ -12,6 +12,7 @@ The open infrastructure for AI agent discovery and interoperability.
 [![License](https://img.shields.io/badge/license-MIT-lightgrey)](./LICENSE)
 [![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen)](./docs/mappings/CONTRIBUTING.md)
 [![Trademark](https://img.shields.io/badge/Trademark-Cialint%E2%84%A2-black)](https://minuet.ai)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/minuetai/agents)
 
 **The canonical schema** for AI agent discovery and interoperability. Enables autonomous agents to publish machine-verifiable definitions with:
 
