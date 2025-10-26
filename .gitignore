@@ -37,3 +37,6 @@ __pycache__/
 env/
 venv/
 .env
+
+# Test files
+test_repo_health.py
