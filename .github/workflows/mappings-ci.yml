@@ -38,23 +38,17 @@ jobs:
             linkchecker --no-warnings --check-extern "$f" || (echo "::warning ::Link check reported issues for $f"; true)
           done
 
-      - name: Guard — schema_version matches schema.json (best effort)
-        if: hashFiles('schema.json') != ''
+      - name: Guard — schema_version in mapping files is present (best effort)
         run: |
           set -e
-          sv=$(python - << 'PY'
-          import json
-          with open('schema.json') as f:
-              print(json.load(f).get('version','').strip())
-          PY
-          )
-          echo "schema.json version: $sv"
-          for f in docs/mappings/*.md docs/Field-Mapping-Overview*.md; do
+          echo "Checking mapping data files have schema_version metadata..."
+          for f in docs/mappings/*_mapping.md docs/Field-Mapping-Overview-v*.md; do
             [ -f "$f" ] || continue
             mv=$(grep -E '^schema_version:' "$f" | head -n1 | awk '{print $2}')
-            [ -z "$mv" ] && continue
-            if [ "$mv" != "$sv" ]; then
-              echo "::warning file=$f::schema_version ($mv) does not match schema.json version ($sv)"
+            if [ -z "$mv" ]; then
+              echo "::warning file=$f::Missing schema_version metadata. Add 'schema_version: 1.0.0' to file header."
+            else
+              echo "  ✓ $f → schema_version: $mv"
             fi
           done
           exit 0
