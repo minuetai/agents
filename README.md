@@ -72,8 +72,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for local validation setup.
 Comprehensive field documentation and ecosystem mappings are available in `/docs/`:
 
 - **[Field Mapping Overview](./docs/Field-Mapping-Overview-v1.0.md)** — How Agent Schema fields map to LangChain, AWS Bedrock, OpenRouter, and other frameworks
-- **[Mappings Directory](./docs/mappings/)** — Detailed framework-specific mappings
-- **[CI/CD Validation](./docs/mappings/CONTRIBUTING.md)** — Governance for maintaining mappings
+- **[Mapping Guidelines](./docs/CONTRIBUTING_MAPPINGS.md)** — Contributing to ecosystem mappings
 
 ---
 
