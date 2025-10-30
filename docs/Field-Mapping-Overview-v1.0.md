@@ -1,4 +1,4 @@
-# Field-Mapping Overview (Minuet Agent Schema ↔ Ecosystem Equivalents)
+# Field-Mapping Overview (Agent Schema ↔ Ecosystem Equivalents)
 version: 2025-10-11  
 schema_version: 1.0.0  
 last_full_verification: TBD  
@@ -18,7 +18,7 @@ Confidence = High | Med | Low | Unknown
 
 ## Core Fields (Verified Mappings)
 
-| **Minuet Field** | **LangChain [ L1 ]** | **OpenRouter [ O1 ]** | **AWS Bedrock AgentCore [ A1 ]** | **Type** | **Confidence** | **Notes / Sources** |
+| **Field** | **LangChain [ L1 ]** | **OpenRouter [ O1 ]** | **AWS Bedrock AgentCore [ A1 ]** | **Type** | **Confidence** | **Notes / Sources** |
 |------------------|-----------------------|-----------------------|----------------------------------|-----------|----------------|----------------------|
 | `name` | `name` (agent class) | — | “Agent Name” concept | Direct | Med | [L1] LangChain agent API docs (2025-10), [A1] AWS AgentCore developer guide. |
 | `description` | `description` attribute | — | “Summary” field concept | Direct | Low | Confirmed in LangChain core docs; AWS reference in preview docs only. |
@@ -37,7 +37,7 @@ Confidence = High | Med | Low | Unknown
 
 ## Pending Verification (Fields Without Public Mappings)
 
-| **Minuet Field** | **Reason Pending** | **Next Action** |
+| **Field** | **Reason Pending** | **Next Action** |
 |------------------|--------------------|-----------------|
 | `deployment_type` | No published field name in LangChain / OpenRouter / AWS docs. | Monitor AWS AgentCore updates and LangChain runtime metadata. |
 | `token_cost_per_1k` | Conceptual in OpenRouter pricing API, but no explicit key. | Confirm once OpenRouter releases pricing schema. |
@@ -62,9 +62,9 @@ Confidence = High | Med | Low | Unknown
 ---
 
 ## Open Research Note
-This document is published as part of Minuet Labs’ ongoing open research into emerging standards for AI-agent interoperability.  
+This document is published as part of ongoing open research into agent interoperability, maintained by Minuet AI.  
 Its purpose is to encourage transparency and convergence across the ecosystem, not to imply exclusivity or competition.  
-By maintaining a public cross-mapping of existing agent frameworks, Minuet aims to accelerate compatibility work and reduce duplication of effort industry-wide.  
+By maintaining a public cross-mapping of existing agent frameworks, Minuet AI aims to accelerate compatibility work and reduce duplication of effort industry-wide.  
 Any provider or contributor is welcome to reference, extend, or improve these mappings in the spirit of shared infrastructure.
 
 ---
@@ -73,7 +73,7 @@ Any provider or contributor is welcome to reference, extend, or improve these ma
 
 **Disclaimer:**  
 This mapping represents Minuet AI's’ independent research as of 2025-10-11.  
-The providers listed are **not** affiliated with Minuet Labs, and no official endorsement or partnership is implied.  
+The providers listed are **not** affiliated with Minuet AI, and no official endorsement or partnership is implied.  
 
 ---
 
