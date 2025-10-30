@@ -29,7 +29,7 @@ Standardizes agent representation across marketplaces, platforms, and ecosystems
 
 ## Schema Quick Reference
 
-The schema is located at `schema.json` (JSON Schema Draft-07, validator-ready). See `examples/` for reference implementations. Each example demonstrates a valid schema instance:
+The schema is located at [`schema.json`](./schema.json) (JSON Schema Draft-07, validator-ready). See [`examples/`](./examples/) for reference implementations. Each example demonstrates a valid schema instance:
 
 | Example | Use Case |
 |---------|----------|
