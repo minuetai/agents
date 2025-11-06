@@ -76,21 +76,6 @@ Comprehensive field documentation and ecosystem mappings are available in `/docs
 
 ---
 
-## 🚀 Publish your agent (24 h discovery)
-
-**No setup required — just publish in your own repository!**
-
-1. Create a file named **`agent.json`** in your own repository
-2. Fill it in using [`examples/example_individual_agent.json`](examples/example_individual_agent.json) as a template
-3. Add topics: `agent-profile`, `ai-agent`, `autonomous-agent`, or `llm-agent`
-4. Validate locally (optional but recommended) — see [Validation & Integration](#validation--integration) for setup
-5. Commit & push — our nightly crawler scans GitHub, validates your agent, and adds it to the public registry
-6. Check the registry → <https://minuetai.github.io/agents/>
-
-> ℹ️ Don't fork this repo unless contributing to the schema itself. Automatic discovery works best with agent definitions in *your* repositories.
-
----
-
 ## Field Highlights
 
 | Field | Notes |
@@ -105,15 +90,15 @@ Full field documentation is in `schema.json`.
 
 ---
 
-## Registry Infrastructure
+## 🌐 Publishing & Discovery (Technical Preview)
 
-The **Agent Registry** at [minuetai.github.io/agents/](https://minuetai.github.io/agents/) automatically discovers and indexes agents published on GitHub.
+Developers can already validate and publish Agent Schema–compliant profiles by including a `schema.json` reference in their repositories.
+Validated profiles are automatically indexed by a lightweight crawler and appear in the public technical preview at [minuetai.github.io/agents/](https://minuetai.github.io/agents/).
 
-**How it works:**
-- A nightly crawler searches GitHub for repositories tagged with `agent-profile`, `ai-agent`, `autonomous-agent`, or `llm-agent`
-- It looks for an `agent.json` file at the repository root
-- If validation passes, the agent is added to the public registry
-- If validation fails, the agent is skipped (check your `agent.json` against the schema)
+This end-to-end pipeline — schema validation, ingestion, and indexed visibility — demonstrates the interoperability groundwork already in place.
+It is currently operated in a limited, low-visibility mode until broader schema adoption begins.
+
+*Goal:* provide a transparent, standards-based foundation for agent discovery without central control or gatekeeping.
 
 ---
 
