@@ -53,15 +53,14 @@ npm install -g ajv-cli ajv-formats
 
 # Validate your agent against schema
 ajv validate -c ajv-formats \
-  -s https://minuetai.github.io/agents/schema.json \
+  -s https://raw.githubusercontent.com/minuetai/agents/main/schema.json \
   -d your-agent.json
 ```
 
 **No CLI?** Paste schema and agent JSON into **<https://jsonschemavalidator.io/>** and click **Validate Schema & Data**.
 
 **Schema URLs:**
-- **Latest** (recommended): `https://minuetai.github.io/agents/schema.json`
-- **Pinned v1.0.0** (production): `https://raw.githubusercontent.com/minuetai/agents/v1.0.0/schema.json`
+- **Latest** (canonical, tracks main): `https://raw.githubusercontent.com/minuetai/agents/main/schema.json`
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for local validation setup.
 
